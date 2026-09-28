@@ -1,195 +1,240 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, XCircle, Sparkles, Lock, MessageSquare, Wrench, DollarSign, Globe } from "lucide-react";
+import {
+  Lock,
+  Users,
+  ShieldCheck,
+  DollarSign,
+  Sparkles,
+  Layers,
+  Check,
+  X,
+  ArrowRight,
+} from "lucide-react";
 
-const pillars = [
-  { icon: Lock, iconColor: "#60A5FA", iconBg: "rgba(37,99,235,0.12)", title: "100% IP Ownership", desc: "All code, assets, and infrastructure are yours from day one. No licensing, no lock-in, no vendor dependency." },
-  { icon: MessageSquare, iconColor: "#A78BFA", iconBg: "rgba(139,92,246,0.12)", title: "Direct Engineer Access", desc: "You communicate directly with the senior engineer building your product. No account managers in the middle." },
-  { icon: Wrench, iconColor: "#86EFAC", iconBg: "rgba(34,197,94,0.1)", title: "Security Is Standard", desc: "OWASP hardening, SAST/DAST scanning, and dependency monitoring run on every single CI build — at no extra cost." },
-  { icon: DollarSign, iconColor: "#FCA5A5", iconBg: "rgba(239,68,68,0.1)", title: "Transparent Pricing", desc: "Fixed-scope milestones. No surprise invoices, no change-order theatre. Every scope change is costed before approval." },
-  { icon: Sparkles, iconColor: "#FCD34D", iconBg: "rgba(245,158,11,0.1)", title: "30-Day Bug Warranty", desc: "Every delivery comes with a 30-day zero-bug warranty. We fix any regression from our code at absolutely no cost." },
-  { icon: Globe, iconColor: "#67E8F9", iconBg: "rgba(6,182,212,0.1)", title: "Open-Source Foundation", desc: "Next.js, PostgreSQL, Docker, Kubernetes — standards-based tools any engineer can maintain. No proprietary trap." },
+const PILLARS = [
+  {
+    icon: Lock,
+    accent: "#06B6D4",
+    title: "100% IP & Codebase Ownership",
+    desc: "Every line of code, Docker container, database migration, and design file is completely yours from day one. Zero hidden royalties or licensing traps.",
+  },
+  {
+    icon: Users,
+    accent: "#3B82F6",
+    title: "Senior Engineers, Direct Access",
+    desc: "You collaborate directly in Slack/Discord with senior architects who write the code. No non-technical project managers game of telephone.",
+  },
+  {
+    icon: ShieldCheck,
+    accent: "#10B981",
+    title: "Defense-Grade Security Built In",
+    desc: "Automated SAST/DAST vulnerability scanning, OWASP Top 10 hardening, and TLS 1.3 standards built into every pull request by default.",
+  },
+  {
+    icon: DollarSign,
+    accent: "#F59E0B",
+    title: "Fixed Milestone Pricing",
+    desc: "Crystal-clear milestone deliverables with no surprise bills. Every scope modification is estimated and explicitly approved in advance.",
+  },
+  {
+    icon: Sparkles,
+    accent: "#8B5CF6",
+    title: "60-Day Zero-Bug Warranty",
+    desc: "We stand behind our craftsmanship. Any bugs or regressions identified within 60 days of production launch are patched with zero billable hours.",
+  },
+  {
+    icon: Layers,
+    accent: "#EC4899",
+    title: "Zero Vendor Lock-In",
+    desc: "We build exclusively on industry-standard open-source stacks (Next.js, Flutter, Go, PostgreSQL, Docker) that any competent engineer can maintain.",
+  },
 ];
 
-const comparison = [
-  { feature: "Source code & IP ownership", aegis: "100% transferred, day one", others: "Retained in vendor contract clauses" },
-  { feature: "Security auditing", aegis: "Automated in every CI pipeline", others: "Separate billable engagement" },
-  { feature: "Communication model", aegis: "Direct Slack with lead engineer", others: "Filtered through non-technical PM" },
-  { feature: "Post-launch support", aegis: "30-day zero-bug warranty", others: "Charged at hourly support rate" },
-  { feature: "Infrastructure platform", aegis: "Open-source, zero lock-in", others: "Proprietary platforms, exit costs" },
-  { feature: "Pricing transparency", aegis: "Fixed-scope, no surprises", others: "Time & materials, change orders" },
+const COMPARISONS = [
+  { feature: "Code & Intellectual Property Ownership", aegis: "100% Transferred from Day 1", others: "Retained / exit fee clauses" },
+  { feature: "Engineer Seniority Level", aegis: "Senior Specialists Only (5+ yrs)", others: "Junior devs managed by PMs" },
+  { feature: "Communication Channels", aegis: "Direct Slack channel with Tech Lead", others: "Ticket portals & email delays" },
+  { feature: "Security & Penetration Testing", aegis: "Included in CI/CD pipeline", others: "Expensive optional add-on" },
+  { feature: "Post-Launch Warranty", aegis: "60-Day Full Bug Warranty", others: "Billed at full hourly rate" },
+  { feature: "Pricing Structure", aegis: "Milestone-fixed with scope guarantee", others: "Open-ended time & materials" },
 ];
 
 export function WhyAegis() {
   return (
-    <section id="why-aegis" className="section" style={{ background: "#070B19", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      <div className="container">
-
+    <section
+      id="why-aegis"
+      style={{
+        background: "#080812",
+        padding: "6rem 0",
+        position: "relative",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      <div className="container-page">
         {/* Header */}
-        <div className="section-header center">
-          <div className="eyebrow">Why SmartAegis</div>
-          <h2 className="h2" style={{ marginBottom: "1.25rem", maxWidth: 580, margin: "0 auto 1.25rem" }}>
-            We Work Like Your Best{" "}
+        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
+          <div className="eyebrow">
+            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            THE SMARTAEGIS ADVANTAGE
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              color: "#FFFFFF",
+              lineHeight: 1.15,
+              marginBottom: "1rem",
+            }}
+          >
+            Why Industry Leaders Choose{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #60A5FA, #818CF8)",
+                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              Internal Team.
+              SmartAegis Technologies
             </span>
           </h2>
-          <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
-            The Aegis was the ultimate shield in Greek mythology — forged by master craftsmen, impenetrable in battle. We apply the same standard to every product we build.
+          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+            In Greek mythology, the Aegis was the impenetrable shield of the gods. We embody that standard:
+            uncompromising engineering rigor, complete transparency, and flawless execution.
           </p>
         </div>
 
-        {/* 3×2 pillar grid */}
+        {/* 6 Value Pillars Grid */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.25rem",
-            marginBottom: "4rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "1.75rem",
+            marginBottom: "4.5rem",
           }}
         >
-          {pillars.map((p) => {
+          {PILLARS.map((p) => {
             const Icon = p.icon;
             return (
               <div
                 key={p.title}
                 style={{
-                  background: "#0D1630",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 16,
-                  padding: "1.75rem",
-                  transition: "all 0.25s",
+                  background: "#0D0D1A",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 20,
+                  padding: "2rem",
+                  transition: "all 0.25s ease",
                   cursor: "default",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = `${p.iconColor}30`;
-                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(0,0,0,0.4)";
+                  const target = e.currentTarget as HTMLDivElement;
+                  target.style.borderColor = p.accent;
+                  target.style.transform = "translateY(-4px)";
+                  target.style.boxShadow = `0 16px 36px rgba(0,0,0,0.5), 0 0 0 1px ${p.accent}20`;
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
-                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                  const target = e.currentTarget as HTMLDivElement;
+                  target.style.borderColor = "rgba(255,255,255,0.06)";
+                  target.style.transform = "translateY(0)";
+                  target.style.boxShadow = "none";
                 }}
               >
                 <div
                   style={{
-                    width: 44,
-                    height: 44,
+                    width: 48,
+                    height: 48,
                     borderRadius: 12,
-                    background: p.iconBg,
-                    border: `1px solid ${p.iconColor}25`,
+                    background: `${p.accent}15`,
+                    border: `1px solid ${p.accent}33`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     marginBottom: "1.25rem",
                   }}
                 >
-                  <Icon size={20} style={{ color: p.iconColor }} />
+                  <Icon size={24} style={{ color: p.accent }} />
                 </div>
-                <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "#F8FAFC", marginBottom: 8 }}>{p.title}</h4>
-                <p style={{ fontSize: "0.875rem", color: "#64748B", lineHeight: 1.65 }}>{p.desc}</p>
+                <h3 style={{ fontSize: "1.1875rem", fontWeight: 700, color: "#FFFFFF", marginBottom: "0.5rem" }}>
+                  {p.title}
+                </h3>
+                <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.55)", lineHeight: 1.6 }}>
+                  {p.desc}
+                </p>
               </div>
             );
           })}
         </div>
 
-        {/* Comparison table */}
-        <div>
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: "0.6875rem",
-              fontWeight: 800,
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              color: "#475569",
-              marginBottom: "1.5rem",
-            }}
-          >
-            How We Compare
-          </p>
+        {/* Agency Comparison Table */}
+        <div
+          style={{
+            background: "#0D0D1A",
+            border: "1px solid rgba(255,255,255,0.08)",
+            borderRadius: 24,
+            padding: "2.5rem",
+            boxShadow: "0 20px 50px rgba(0,0,0,0.4)",
+          }}
+        >
+          <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+            <h3 style={{ fontSize: "1.375rem", fontWeight: 800, color: "#FFFFFF", marginBottom: 6 }}>
+              SmartAegis vs. Traditional Software Agencies
+            </h3>
+            <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.5)" }}>
+              See how our engineering-first partnership compares to old-school outsourced vendors.
+            </p>
+          </div>
 
-          <div
-            style={{
-              background: "#0D1630",
-              border: "1px solid rgba(255,255,255,0.07)",
-              borderRadius: 20,
-              overflow: "hidden",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-            }}
-          >
-            {/* Table head */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 1.5fr 1.5fr",
-                padding: "1rem 1.75rem",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-                background: "rgba(255,255,255,0.02)",
-              }}
-            >
-              <span style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569" }}>Feature</span>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div
-                  style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 5,
-                    background: "linear-gradient(135deg, #2563EB, #4F46E5)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 2L20 6V12C20 16.4 16.9 20.5 12 22C7.1 20.5 4 16.4 4 12V6L12 2Z" fill="white"/>
-                  </svg>
-                </div>
-                <span style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#60A5FA" }}>SmartAegis</span>
-              </div>
-              <span style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569" }}>Typical Agency</span>
-            </div>
-
-            {/* Rows */}
-            {comparison.map((row, i) => (
-              <div
-                key={row.feature}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "2fr 1.5fr 1.5fr",
-                  padding: "1rem 1.75rem",
-                  borderBottom: i < comparison.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                  alignItems: "center",
-                  transition: "background 0.15s",
-                }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.background = "transparent")}
-              >
-                <span style={{ fontSize: "0.9375rem", color: "#94A3B8", paddingRight: 16 }}>{row.feature}</span>
-
-                <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                  <CheckCircle2 size={15} style={{ color: "#22C55E", flexShrink: 0, marginTop: 2 }} />
-                  <span style={{ fontSize: "0.875rem", color: "#E2E8F0", fontWeight: 500 }}>{row.aegis}</span>
-                </div>
-
-                <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                  <XCircle size={15} style={{ color: "rgba(239,68,68,0.5)", flexShrink: 0, marginTop: 2 }} />
-                  <span style={{ fontSize: "0.875rem", color: "#475569" }}>{row.others}</span>
-                </div>
-              </div>
-            ))}
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", textAlign: "left" }}>
+              <thead>
+                <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                  <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                    Service Criterion
+                  </th>
+                  <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "#06B6D4", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 800 }}>
+                    SmartAegis Technologies
+                  </th>
+                  <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                    Traditional IT Firms
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARISONS.map((row, idx) => (
+                  <tr
+                    key={row.feature}
+                    style={{
+                      borderBottom: idx < COMPARISONS.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
+                    }}
+                  >
+                    <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.875rem", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>
+                      {row.feature}
+                    </td>
+                    <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.875rem", fontWeight: 700, color: "#22D3EE" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <div style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(6,182,212,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Check size={13} style={{ color: "#06B6D4" }} />
+                        </div>
+                        {row.aegis}
+                      </div>
+                    </td>
+                    <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.845rem", color: "rgba(255,255,255,0.4)" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                        <div style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(239,68,68,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <X size={13} style={{ color: "#EF4444" }} />
+                        </div>
+                        {row.others}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
-
       </div>
     </section>
   );

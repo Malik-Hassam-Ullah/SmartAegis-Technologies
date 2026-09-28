@@ -1,348 +1,417 @@
 "use client";
 
 import React, { useState } from "react";
-import { Send, ArrowRight, Mail, Clock, Globe, CheckCircle2 } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  Clock,
+  ShieldCheck,
+  Send,
+  CheckCircle2,
+  Sparkles,
+  MapPin,
+  MessageSquare,
+  Lock,
+} from "lucide-react";
+
+const PROJECT_TYPES = ["Web Application", "Mobile App", "Enterprise SaaS", "AI & Automation", "UI/UX Design"];
+const BUDGET_RANGES = ["$5k – $10k", "$10k – $25k", "$25k – $50k", "$50k+"];
 
 export function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", budget: "$15k–$30k", message: "" });
+  const [projectType, setProjectType] = useState<string>("Web Application");
+  const [budget, setBudget] = useState<string>("$10k – $25k");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    message: "",
+  });
   const [submitting, setSubmitting] = useState(false);
-  const [done, setDone] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.email) return;
     setSubmitting(true);
-    setTimeout(() => { setSubmitting(false); setDone(true); }, 800);
+    setTimeout(() => {
+      setSubmitting(false);
+      setSubmitted(true);
+    }, 750);
   };
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    padding: "12px 16px",
+    padding: "0.875rem 1.125rem",
     borderRadius: 12,
-    border: "1px solid rgba(255,255,255,0.08)",
-    background: "rgba(255,255,255,0.04)",
-    color: "#F8FAFC",
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.09)",
+    color: "#FFFFFF",
     fontSize: "0.9375rem",
     outline: "none",
-    boxSizing: "border-box",
-    transition: "border-color 0.15s, background 0.15s",
     fontFamily: "inherit",
+    transition: "border-color 0.2s ease, background 0.2s ease",
   };
 
   return (
-    <section id="contact" className="section" style={{ background: "#070B19", borderTop: "1px solid rgba(255,255,255,0.05)", position: "relative", overflow: "hidden" }}>
-      <div className="mesh-bg" />
-
-      <div className="container" style={{ position: "relative", zIndex: 2 }}>
-
+    <section
+      id="contact"
+      style={{
+        background: "#080812",
+        padding: "6rem 0",
+        position: "relative",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      <div className="container-page">
         {/* Header */}
-        <div className="section-header center">
-          <div className="eyebrow">Start a Project</div>
-          <h2 className="h2" style={{ marginBottom: "1.25rem", maxWidth: 560, margin: "0 auto 1.25rem" }}>
-            Ready to Build Something{" "}
+        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
+          <div className="eyebrow">
+            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            START A CONVERSATION
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              color: "#FFFFFF",
+              lineHeight: 1.15,
+              marginBottom: "1rem",
+            }}
+          >
+            Let’s Build Something{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #60A5FA, #818CF8)",
+                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              Remarkable?
+              Remarkable Together
             </span>
           </h2>
-          <p className="body-lg" style={{ maxWidth: 480, margin: "0 auto" }}>
-            Fill in your brief below. We'll send a preliminary architecture plan and cost estimate to your inbox within 4 hours.
+          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+            Submit your technical brief below. A Principal Architect will analyze your requirements
+            and respond within 2 hours with an initial estimation and consultation slot.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "3rem", alignItems: "start" }}>
-
-          {/* LEFT: what to expect + contact details */}
-          <div>
-            {/* Steps */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "2.5rem" }}>
-              {[
-                { step: "01", title: "Submit your brief", desc: "Takes 2 minutes. No obligation, no sales call needed to get started.", icon: "✍️" },
-                { step: "02", title: "Receive architecture plan", desc: "We'll send a technical brief specific to your project within 4 hours.", icon: "📐" },
-                { step: "03", title: "Align on scope & price", desc: "One 30-min call with the engineer who will actually build it.", icon: "🤝" },
-              ].map((s) => (
-                <div key={s.step} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <div className="step-num">{s.step}</div>
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                      <span style={{ fontSize: "1rem" }}>{s.icon}</span>
-                      <h4 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#E2E8F0" }}>{s.title}</h4>
-                    </div>
-                    <p style={{ fontSize: "0.875rem", color: "#64748B", lineHeight: 1.6 }}>{s.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Contact details */}
+        {/* 2-Column Contact Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "2.5rem",
+            alignItems: "start",
+          }}
+        >
+          {/* Left Column: Direct Info & Guarantees */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            {/* Contact details box */}
             <div
               style={{
-                background: "#0D1630",
-                border: "1px solid rgba(255,255,255,0.07)",
-                borderRadius: 16,
-                padding: "1.5rem",
+                background: "#0D0D1A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 20,
+                padding: "2rem",
               }}
             >
-              <p style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569", marginBottom: "1rem" }}>
-                Contact directly
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#fff", marginBottom: "1.5rem" }}>
+                Direct Communication Channels
+              </h3>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
                 <a
                   href="mailto:contact@smartaegis.tech"
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    fontSize: "0.9375rem",
-                    color: "#60A5FA",
-                    textDecoration: "none",
-                    transition: "color 0.15s",
-                  }}
+                  style={{ display: "flex", alignItems: "flex-start", gap: 14, color: "inherit", textDecoration: "none" }}
                 >
                   <div
                     style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 8,
-                      background: "rgba(37,99,235,0.1)",
-                      border: "1px solid rgba(37,99,235,0.2)",
+                      width: 42,
+                      height: 42,
+                      borderRadius: 10,
+                      background: "rgba(6,182,212,0.1)",
+                      border: "1px solid rgba(6,182,212,0.25)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <Mail size={14} style={{ color: "#60A5FA" }} />
+                    <Mail size={18} style={{ color: "#06B6D4" }} />
                   </div>
-                  contact@smartaegis.tech
+                  <div>
+                    <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>Email Our Engineers</div>
+                    <div style={{ fontSize: "0.9375rem", fontWeight: 600, color: "#FFFFFF" }}>contact@smartaegis.tech</div>
+                  </div>
                 </a>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+
+                <a
+                  href="tel:+923001234567"
+                  style={{ display: "flex", alignItems: "flex-start", gap: 14, color: "inherit", textDecoration: "none" }}
+                >
                   <div
                     style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 8,
-                      background: "rgba(34,197,94,0.08)",
-                      border: "1px solid rgba(34,197,94,0.2)",
+                      width: 42,
+                      height: 42,
+                      borderRadius: 10,
+                      background: "rgba(6,182,212,0.1)",
+                      border: "1px solid rgba(6,182,212,0.25)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <Clock size={14} style={{ color: "#86EFAC" }} />
+                    <Phone size={18} style={{ color: "#06B6D4" }} />
                   </div>
-                  <span style={{ fontSize: "0.875rem", color: "#64748B" }}>
-                    Response SLA: <strong style={{ color: "#94A3B8" }}>&lt; 4 hours</strong>
-                  </span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div>
+                    <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>Direct Phone & WhatsApp</div>
+                    <div style={{ fontSize: "0.9375rem", fontWeight: 600, color: "#FFFFFF" }}>+92 300 1234567</div>
+                  </div>
+                </a>
+
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
                   <div
                     style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 8,
-                      background: "rgba(139,92,246,0.08)",
-                      border: "1px solid rgba(139,92,246,0.2)",
+                      width: 42,
+                      height: 42,
+                      borderRadius: 10,
+                      background: "rgba(6,182,212,0.1)",
+                      border: "1px solid rgba(6,182,212,0.25)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <Globe size={14} style={{ color: "#A78BFA" }} />
+                    <MapPin size={18} style={{ color: "#06B6D4" }} />
                   </div>
-                  <span style={{ fontSize: "0.875rem", color: "#64748B" }}>
-                    Coverage: <strong style={{ color: "#94A3B8" }}>US · UK · UAE · PK</strong>
-                  </span>
+                  <div>
+                    <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>Global Presence</div>
+                    <div style={{ fontSize: "0.9375rem", fontWeight: 600, color: "#FFFFFF" }}>
+                      Lahore, PK • Dubai, UAE • Delaware, USA
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* SLA Response Guarantee Box */}
+            <div
+              style={{
+                background: "rgba(6,182,212,0.05)",
+                border: "1px solid rgba(6,182,212,0.2)",
+                borderRadius: 18,
+                padding: "1.5rem",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.5rem" }}>
+                <Clock size={18} style={{ color: "#06B6D4" }} />
+                <span style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#22D3EE" }}>
+                  2-Hour Response Time SLA
+                </span>
+              </div>
+              <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
+                We respect your engineering timeline. During standard business hours, you will receive
+                a qualified technical assessment within 120 minutes.
+              </p>
+            </div>
+
+            {/* Mutual NDA Guarantee Box */}
+            <div
+              style={{
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 18,
+                padding: "1.5rem",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.5rem" }}>
+                <Lock size={18} style={{ color: "#10B981" }} />
+                <span style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#34D399" }}>
+                  100% Strict Mutual NDA
+                </span>
+              </div>
+              <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
+                Your intellectual property and technical concept are legally protected from the moment
+                you contact us. We are happy to countersign your corporate NDA prior to call.
+              </p>
+            </div>
           </div>
 
-          {/* RIGHT: form */}
+          {/* Right Column: Interactive Consultation RFP Form */}
           <div
             style={{
-              background: "#0D1630",
+              background: "#0D0D1A",
               border: "1px solid rgba(255,255,255,0.08)",
               borderRadius: 24,
               padding: "2.5rem",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+              boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
             }}
           >
-            {!done ? (
-              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            {!submitted ? (
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+                {/* Project Category Selection */}
                 <div>
-                  <h3 style={{ fontSize: "1.25rem", fontWeight: 800, color: "#F8FAFC", marginBottom: 6 }}>
-                    Tell us about your project
-                  </h3>
-                  <p style={{ fontSize: "0.875rem", color: "#475569" }}>
-                    All fields required. Mutual NDA available on request.
-                  </p>
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                  <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#64748B", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                      Your name
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="Alex Mercer"
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      style={inputStyle}
-                      onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(37,99,235,0.5)")}
-                      onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
-                    />
-                  </div>
-                  <div>
-                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#64748B", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                      Work email
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      placeholder="alex@company.com"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      style={inputStyle}
-                      onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(37,99,235,0.5)")}
-                      onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#64748B", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                    Approximate budget
+                  <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.6)", marginBottom: "0.75rem" }}>
+                    What are you looking to build?
                   </label>
-                  <select
-                    value={form.budget}
-                    onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                    style={{ ...inputStyle, appearance: "none", cursor: "pointer" }}
-                  >
-                    <option>Under $15k</option>
-                    <option>$15k – $30k</option>
-                    <option>$30k – $60k</option>
-                    <option>$60k – $150k</option>
-                    <option>$150k+</option>
-                    <option>Ongoing retainer</option>
-                  </select>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                    {PROJECT_TYPES.map((type) => {
+                      const isSelected = projectType === type;
+                      return (
+                        <button
+                          key={type}
+                          type="button"
+                          onClick={() => setProjectType(type)}
+                          style={{
+                            padding: "0.45rem 1rem",
+                            borderRadius: 100,
+                            fontSize: "0.8125rem",
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            background: isSelected ? "#06B6D4" : "rgba(255,255,255,0.03)",
+                            color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.65)",
+                            border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.08)",
+                            transition: "all 0.15s ease",
+                          }}
+                        >
+                          {type}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Budget Range Selection */}
+                <div>
+                  <label style={{ display: "block", fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.6)", marginBottom: "0.75rem" }}>
+                    Estimated Project Budget
+                  </label>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                    {BUDGET_RANGES.map((b) => {
+                      const isSelected = budget === b;
+                      return (
+                        <button
+                          key={b}
+                          type="button"
+                          onClick={() => setBudget(b)}
+                          style={{
+                            padding: "0.45rem 1rem",
+                            borderRadius: 100,
+                            fontSize: "0.8125rem",
+                            fontWeight: 600,
+                            cursor: "pointer",
+                            background: isSelected ? "rgba(6,182,212,0.15)" : "rgba(255,255,255,0.03)",
+                            color: isSelected ? "#22D3EE" : "rgba(255,255,255,0.65)",
+                            border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.08)",
+                            transition: "all 0.15s ease",
+                          }}
+                        >
+                          {b}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Inputs */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.6)", marginBottom: 6 }}>
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Jane Doe"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      style={inputStyle}
+                      onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.6)", marginBottom: 6 }}>
+                      Corporate Email *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="jane@company.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      style={inputStyle}
+                      onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                      onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 700, color: "#64748B", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                    What are you building?
+                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.6)", marginBottom: 6 }}>
+                    Company / Organization Name (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Acme Corp, Inc."
+                    value={formData.company}
+                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                    style={inputStyle}
+                    onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                    onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "0.75rem", fontWeight: 600, color: "rgba(255,255,255,0.6)", marginBottom: 6 }}>
+                    Project Brief & Key Requirements
                   </label>
                   <textarea
-                    required
                     rows={4}
-                    placeholder="Describe your product, the problem it solves, key features needed, and any technical constraints or deadlines we should know about..."
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    style={{ ...inputStyle, resize: "none", lineHeight: 1.65 }}
-                    onFocus={(e) => (e.currentTarget.style.borderColor = "rgba(37,99,235,0.5)")}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)")}
+                    placeholder="Describe your product vision, timeline constraints, or existing codebase..."
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    style={{ ...inputStyle, resize: "vertical" }}
+                    onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                    onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={submitting}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: 8,
-                    padding: "1rem",
-                    borderRadius: 14,
-                    background: "linear-gradient(135deg, #2563EB, #1D4ED8)",
-                    color: "#fff",
-                    fontWeight: 700,
-                    fontSize: "1rem",
-                    border: "none",
-                    cursor: submitting ? "not-allowed" : "pointer",
-                    boxShadow: "0 6px 20px rgba(37,99,235,0.45)",
-                    transition: "all 0.2s",
-                    opacity: submitting ? 0.75 : 1,
-                    fontFamily: "inherit",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!submitting) (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 8px 28px rgba(37,99,235,0.6)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 6px 20px rgba(37,99,235,0.45)";
-                  }}
+                  className="btn-brand"
+                  style={{ width: "100%", justifyContent: "center", padding: "1rem" }}
                 >
-                  {submitting ? (
-                    "Sending…"
-                  ) : (
-                    <>
-                      Send Project Brief
-                      <Send size={16} />
-                    </>
-                  )}
+                  {submitting ? "Analyzing Brief..." : "Submit Technical Brief & Schedule Call"}
+                  <Send size={16} />
                 </button>
-
-                {/* Trust bullets */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 16px", justifyContent: "center", paddingTop: 4 }}>
-                  {["No spam, guaranteed", "Mutual NDA available", "Response in < 4 hours"].map((t) => (
-                    <span key={t} style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.75rem", color: "#475569" }}>
-                      <CheckCircle2 size={11} style={{ color: "#22C55E" }} />
-                      {t}
-                    </span>
-                  ))}
-                </div>
               </form>
             ) : (
               <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
-                <div
-                  style={{
-                    width: 64,
-                    height: 64,
-                    borderRadius: "50%",
-                    background: "rgba(34,197,94,0.1)",
-                    border: "1px solid rgba(34,197,94,0.25)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    margin: "0 auto 1.5rem",
-                    fontSize: "1.75rem",
-                  }}
-                >
-                  ✅
-                </div>
-                <h3 style={{ fontSize: "1.375rem", fontWeight: 800, color: "#F8FAFC", marginBottom: 12 }}>
-                  Brief received — thank you!
+                <CheckCircle2 size={48} style={{ color: "#10B981", margin: "0 auto 1rem" }} />
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#fff", marginBottom: "0.5rem" }}>
+                  Brief Received Successfully
                 </h3>
-                <p style={{ fontSize: "0.9375rem", color: "#64748B", lineHeight: 1.7, maxWidth: 360, margin: "0 auto 1.5rem" }}>
-                  We're reviewing your project now and will send a technical brief and cost estimate to{" "}
-                  <strong style={{ color: "#E2E8F0" }}>{form.email}</strong> within 4 hours.
+                <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.6, maxWidth: "420px", margin: "0 auto 1.5rem" }}>
+                  Thank you, {formData.name}. Our Principal Engineer will review your requirements for <strong>{projectType}</strong> and contact you at <strong>{formData.email}</strong> within 2 hours.
                 </p>
-                <div
-                  style={{
-                    padding: "14px 24px",
-                    borderRadius: 12,
-                    background: "rgba(34,197,94,0.06)",
-                    border: "1px solid rgba(34,197,94,0.15)",
-                    fontSize: "0.875rem",
-                    color: "#86EFAC",
-                    fontWeight: 600,
+                <button
+                  onClick={() => {
+                    setSubmitted(false);
+                    setFormData({ name: "", email: "", company: "", message: "" });
                   }}
+                  className="btn-outline"
                 >
-                  💬 Check your inbox — including spam / promotions tab
-                </div>
+                  Send another inquiry
+                </button>
               </div>
             )}
           </div>
-
         </div>
       </div>
     </section>

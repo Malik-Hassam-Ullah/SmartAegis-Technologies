@@ -1,438 +1,584 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { ArrowRight, Check, Zap, Clock, DollarSign } from "lucide-react";
+import {
+  Calculator,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Sparkles,
+  Shield,
+  Send,
+  Zap,
+  Check,
+} from "lucide-react";
 
-const platforms = [
-  { id: "web", label: "Web App / Portal", emoji: "🌐", base: 8500, weeks: 5 },
-  { id: "mobile", label: "Mobile App (iOS + Android)", emoji: "📱", base: 12000, weeks: 7 },
-  { id: "saas", label: "Full-stack SaaS Platform", emoji: "⚡", base: 16500, weeks: 9 },
-  { id: "enterprise", label: "Enterprise / ERP System", emoji: "🏢", base: 25000, weeks: 12 },
+interface Option {
+  id: string;
+  name: string;
+  desc: string;
+  basePrice: number;
+  weeks: number;
+}
+
+const PLATFORMS: Option[] = [
+  {
+    id: "web",
+    name: "Custom Web Application",
+    desc: "Next.js 15, React, responsive PWA, and SEO-optimized architecture.",
+    basePrice: 8500,
+    weeks: 5,
+  },
+  {
+    id: "mobile",
+    name: "Mobile App (iOS & Android)",
+    desc: "Flutter / React Native cross-platform with native performance & offline sync.",
+    basePrice: 12000,
+    weeks: 7,
+  },
+  {
+    id: "saas",
+    name: "Full-Stack SaaS Platform",
+    desc: "Multi-tenant cloud architecture, subscription engine, and analytics dashboard.",
+    basePrice: 16500,
+    weeks: 9,
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise ERP / System",
+    desc: "High-throughput microservices, legacy migrations, and defense-grade RBAC.",
+    basePrice: 24000,
+    weeks: 12,
+  },
 ];
 
-const designs = [
-  { id: "basic", label: "Standard UI", note: "Clean, functional", multiplier: 1.0 },
-  { id: "custom", label: "Custom Design System", note: "Unique brand identity", multiplier: 1.15 },
-  { id: "premium", label: "Premium UI/UX", note: "Award-worthy interface", multiplier: 1.3 },
+const DESIGN_TIERS = [
+  {
+    id: "standard",
+    name: "Clean Corporate",
+    desc: "Modern standard component library & clean responsive layouts.",
+    multiplier: 1.0,
+  },
+  {
+    id: "custom",
+    name: "Custom Figma System",
+    desc: "Bespoke design tokens, interactive prototypes, and custom UI components.",
+    multiplier: 1.18,
+  },
+  {
+    id: "elite",
+    name: "Elite High-End Experience",
+    desc: "Award-winning micro-interactions, rich animations & premium design system.",
+    multiplier: 1.35,
+  },
 ];
 
-const features = [
-  { id: "auth", label: "Auth & RBAC", emoji: "🔐", price: 1800 },
-  { id: "payments", label: "Payments & Billing", emoji: "💳", price: 2500 },
-  { id: "realtime", label: "Real-time & Notifications", emoji: "⚡", price: 2800 },
-  { id: "admin", label: "Admin Dashboard", emoji: "📊", price: 3200 },
-  { id: "ai", label: "AI / LLM Integration", emoji: "🤖", price: 5500 },
-  { id: "infra", label: "Cloud Infra & DevOps", emoji: "☁️", price: 3000 },
+const FEATURES = [
+  { id: "auth", name: "Auth & RBAC", desc: "OAuth, SSO, 2FA, session security", price: 1800 },
+  { id: "billing", name: "Stripe / Payments", desc: "Subscriptions, webhooks, invoices", price: 2500 },
+  { id: "realtime", name: "Real-time Sync", desc: "Websockets, live notifications", price: 2800 },
+  { id: "ai", name: "AI / LLM Integration", desc: "Custom RAG, OpenAI, smart agents", price: 5200 },
+  { id: "dashboard", name: "Admin Dashboard", desc: "Data tables, exports, user controls", price: 3200 },
+  { id: "devops", name: "DevOps & Cloud IaC", desc: "Terraform, Docker, CI/CD, AWS setup", price: 3000 },
 ];
 
-const timelines = [
-  { id: "fast", label: "Fast-track", sub: "Priority queue", multiplier: 1.3 },
-  { id: "standard", label: "Standard", sub: "Recommended", multiplier: 1.0 },
-  { id: "flexible", label: "Flexible", sub: "Lower cost", multiplier: 0.85 },
+const SPEEDS = [
+  { id: "standard", name: "Standard Agile", desc: "Bi-weekly sprint milestones", mult: 1.0, weekMult: 1.0 },
+  { id: "fast", name: "Fast-Track Sprint", desc: "Dedicated pod, high velocity", mult: 1.25, weekMult: 0.75 },
+  { id: "flexible", name: "Flexible Milestone", desc: "Cost-optimized schedule", mult: 0.9, weekMult: 1.3 },
 ];
 
 export function Estimator() {
-  const [platform, setPlatform] = useState("web");
-  const [design, setDesign] = useState("custom");
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
-  const [timeline, setTimeline] = useState("standard");
-  const [step, setStep] = useState<number>(1);
+  const [selectedPlatform, setSelectedPlatform] = useState<string>("web");
+  const [selectedDesign, setSelectedDesign] = useState<string>("custom");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(["auth", "dashboard"]);
+  const [selectedSpeed, setSelectedSpeed] = useState<string>("standard");
+
+  // Lead form
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const toggleFeature = (id: string) =>
-    setSelectedFeatures((prev) => (prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]));
+  const toggleFeature = (id: string) => {
+    setSelectedFeatures((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
 
-  const estimate = useMemo(() => {
-    const p = platforms.find((x) => x.id === platform) || platforms[0];
-    const d = designs.find((x) => x.id === design) || designs[1];
-    const t = timelines.find((x) => x.id === timeline) || timelines[1];
-    let featureSum = 0;
-    selectedFeatures.forEach((fid) => {
-      const f = features.find((x) => x.id === fid);
-      if (f) featureSum += f.price;
-    });
-    const raw = (p.base + featureSum) * d.multiplier * t.multiplier;
+  const calculatedEstimate = useMemo(() => {
+    const platform = PLATFORMS.find((p) => p.id === selectedPlatform) || PLATFORMS[0];
+    const design = DESIGN_TIERS.find((d) => d.id === selectedDesign) || DESIGN_TIERS[1];
+    const speed = SPEEDS.find((s) => s.id === selectedSpeed) || SPEEDS[0];
+
+    const featureSum = selectedFeatures.reduce((acc, fid) => {
+      const f = FEATURES.find((item) => item.id === fid);
+      return acc + (f ? f.price : 0);
+    }, 0);
+
+    const baseCalculation = (platform.basePrice + featureSum) * design.multiplier * speed.mult;
+    const minEstimate = Math.round((baseCalculation * 0.92) / 250) * 250;
+    const maxEstimate = Math.round((baseCalculation * 1.12) / 250) * 250;
+    const calculatedWeeks = Math.max(3, Math.round(platform.weeks * speed.weekMult));
+
     return {
-      lo: Math.round(raw * 0.9 / 500) * 500,
-      hi: Math.round(raw * 1.15 / 500) * 500,
-      weeks: Math.round(p.weeks * (timeline === "fast" ? 0.75 : timeline === "flexible" ? 1.3 : 1)),
+      min: minEstimate,
+      max: maxEstimate,
+      weeks: calculatedWeeks,
+      platformName: platform.name,
     };
-  }, [platform, design, selectedFeatures, timeline]);
+  }, [selectedPlatform, selectedDesign, selectedFeatures, selectedSpeed]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email) return;
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }, 700);
+  };
 
   return (
-    <section id="estimator" className="section" style={{ background: "#060A17", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      <div className="container">
-
-        {/* Header */}
-        <div className="section-header center">
-          <div className="eyebrow">Project Estimator</div>
-          <h2 className="h2" style={{ marginBottom: "1rem", maxWidth: 560, margin: "0 auto 1rem" }}>
-            What Will Your{" "}
+    <section
+      id="estimator"
+      style={{
+        background: "#06060E",
+        padding: "6rem 0",
+        position: "relative",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      <div className="container-page">
+        {/* Section Header */}
+        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
+          <div className="eyebrow">
+            <Calculator size={14} style={{ color: "#06B6D4" }} />
+            TRANSPARENT PRICING CALCULATOR
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              color: "#FFFFFF",
+              lineHeight: 1.15,
+              marginBottom: "1rem",
+            }}
+          >
+            Estimate Your Project Cost &{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #60A5FA, #818CF8)",
+                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              Project Cost?
+              Delivery Timeline
             </span>
           </h2>
-          <p className="body-lg" style={{ maxWidth: 480, margin: "0 auto" }}>
-            Build your custom scope below and get a transparent estimate — no sales call required.
+          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+            Select your technical scope below for an instant, real-time budgetary estimate based on our
+            standard engineering sprint rates.
           </p>
         </div>
 
-        {/* Main estimator card */}
+        {/* 2-Column Calculator Layout */}
         <div
           style={{
-            background: "#0D1630",
-            border: "1px solid rgba(255,255,255,0.08)",
-            borderRadius: 24,
-            overflow: "hidden",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gap: "2rem",
+            alignItems: "start",
           }}
         >
-          {/* Top: price display */}
-          <div
-            style={{
-              background: "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(99,102,241,0.08) 100%)",
-              borderBottom: "1px solid rgba(255,255,255,0.06)",
-              padding: "2rem 2.5rem",
-              display: "grid",
-              gridTemplateColumns: "1fr auto 1fr",
-              gap: "2rem",
-              alignItems: "center",
-            }}
-          >
-            {/* Estimate range */}
-            <div>
-              <div style={{ fontSize: "0.6875rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748B", marginBottom: 8, fontFamily: "ui-monospace, monospace" }}>
-                Estimated Budget
+          {/* Left Column: Scope Selectors */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+            {/* Step 1: Platform Selection */}
+            <div
+              style={{
+                background: "#0D0D1A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 20,
+                padding: "1.75rem",
+              }}
+            >
+              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+                1. Select Application Type
               </div>
-              <div
-                style={{
-                  fontSize: "clamp(2rem, 4vw, 3rem)",
-                  fontWeight: 900,
-                  color: "#60A5FA",
-                  letterSpacing: "-0.045em",
-                  fontFamily: "ui-monospace, monospace",
-                  lineHeight: 1,
-                }}
-              >
-                ${estimate.lo.toLocaleString()}
-                <span style={{ color: "#334155" }}>–</span>
-                ${estimate.hi.toLocaleString()}
-              </div>
-              <div style={{ fontSize: "0.8125rem", color: "#64748B", marginTop: 6 }}>
-                USD · All-inclusive. Zero hidden fees.
+              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" }}>
+                {PLATFORMS.map((plat) => {
+                  const isSelected = selectedPlatform === plat.id;
+                  return (
+                    <div
+                      key={plat.id}
+                      onClick={() => setSelectedPlatform(plat.id)}
+                      style={{
+                        padding: "1rem 1.25rem",
+                        borderRadius: 14,
+                        border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
+                        background: isSelected ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+                        <div style={{ fontWeight: 700, fontSize: "0.9375rem", color: isSelected ? "#fff" : "rgba(255,255,255,0.85)" }}>
+                          {plat.name}
+                        </div>
+                        <div
+                          style={{
+                            width: 18,
+                            height: 18,
+                            borderRadius: "50%",
+                            border: isSelected ? "5px solid #06B6D4" : "2px solid rgba(255,255,255,0.2)",
+                            background: isSelected ? "#fff" : "transparent",
+                          }}
+                        />
+                      </div>
+                      <div style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.4 }}>
+                        {plat.desc}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
-            <div style={{ width: 1, height: 60, background: "rgba(255,255,255,0.06)" }} />
+            {/* Step 2: Design Level */}
+            <div
+              style={{
+                background: "#0D0D1A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 20,
+                padding: "1.75rem",
+              }}
+            >
+              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+                2. Design & UX Architecture
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
+                {DESIGN_TIERS.map((tier) => {
+                  const isSelected = selectedDesign === tier.id;
+                  return (
+                    <div
+                      key={tier.id}
+                      onClick={() => setSelectedDesign(tier.id)}
+                      style={{
+                        padding: "1rem",
+                        borderRadius: 12,
+                        border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
+                        background: isSelected ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      <div style={{ fontWeight: 700, fontSize: "0.875rem", color: isSelected ? "#fff" : "rgba(255,255,255,0.85)", marginBottom: 4 }}>
+                        {tier.name}
+                      </div>
+                      <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.4 }}>
+                        {tier.desc}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-            {/* Timeline */}
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                <Clock size={15} style={{ color: "#818CF8" }} />
-                <span style={{ fontSize: "0.6875rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748B", fontFamily: "ui-monospace, monospace" }}>
-                  Delivery Timeline
-                </span>
+            {/* Step 3: Feature Add-ons */}
+            <div
+              style={{
+                background: "#0D0D1A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 20,
+                padding: "1.75rem",
+              }}
+            >
+              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+                3. Technical Modules & Features (Select all needed)
               </div>
-              <div style={{ fontSize: "2rem", fontWeight: 900, color: "#A78BFA", letterSpacing: "-0.04em", fontFamily: "ui-monospace, monospace", lineHeight: 1 }}>
-                ~{estimate.weeks} weeks
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
+                {FEATURES.map((feat) => {
+                  const isChecked = selectedFeatures.includes(feat.id);
+                  return (
+                    <div
+                      key={feat.id}
+                      onClick={() => toggleFeature(feat.id)}
+                      style={{
+                        padding: "0.875rem 1rem",
+                        borderRadius: 12,
+                        border: isChecked ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
+                        background: isChecked ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "flex-start",
+                        gap: 10,
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 18,
+                          height: 18,
+                          borderRadius: 5,
+                          border: isChecked ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.2)",
+                          background: isChecked ? "#06B6D4" : "transparent",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                          marginTop: 2,
+                        }}
+                      >
+                        {isChecked && <Check size={12} style={{ color: "#fff" }} />}
+                      </div>
+                      <div>
+                        <div style={{ fontSize: "0.845rem", fontWeight: 700, color: isChecked ? "#fff" : "rgba(255,255,255,0.85)" }}>
+                          {feat.name}
+                        </div>
+                        <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>
+                          {feat.desc}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div style={{ fontSize: "0.8125rem", color: "#64748B", marginTop: 6 }}>
-                From kickoff to production launch
+            </div>
+
+            {/* Step 4: Speed / Velocity */}
+            <div
+              style={{
+                background: "#0D0D1A",
+                border: "1px solid rgba(255,255,255,0.06)",
+                borderRadius: 20,
+                padding: "1.75rem",
+              }}
+            >
+              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+                4. Delivery Velocity
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
+                {SPEEDS.map((sp) => {
+                  const isSelected = selectedSpeed === sp.id;
+                  return (
+                    <div
+                      key={sp.id}
+                      onClick={() => setSelectedSpeed(sp.id)}
+                      style={{
+                        padding: "1rem",
+                        borderRadius: 12,
+                        border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
+                        background: isSelected ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        cursor: "pointer",
+                        transition: "all 0.2s ease",
+                      }}
+                    >
+                      <div style={{ fontWeight: 700, fontSize: "0.875rem", color: isSelected ? "#fff" : "rgba(255,255,255,0.85)", marginBottom: 4 }}>
+                        {sp.name}
+                      </div>
+                      <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.5)" }}>
+                        {sp.desc}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
 
-          {/* Config grid */}
-          <div style={{ padding: "2.5rem", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2.5rem" }}>
+          {/* Right Column: Live Calculation & Direct Consultation Form */}
+          <div style={{ position: "sticky", top: "100px" }}>
+            <div
+              style={{
+                background: "#0D0D1A",
+                border: "1px solid rgba(6,182,212,0.3)",
+                borderRadius: 24,
+                padding: "2.25rem",
+                boxShadow: "0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(6,182,212,0.08)",
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {/* Card top badge */}
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "4px 12px",
+                  borderRadius: 100,
+                  background: "rgba(6,182,212,0.12)",
+                  border: "1px solid rgba(6,182,212,0.25)",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  color: "#22D3EE",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <Zap size={12} />
+                LIVE SUMMARY
+              </div>
 
-            {/* Left column */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-
-              {/* Platform */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                  <div className="step-num">01</div>
-                  <p style={{ fontWeight: 700, color: "#CBD5E1", fontSize: "0.9375rem" }}>Choose your platform</p>
+              {/* Price Estimate */}
+              <div style={{ marginBottom: "1.75rem" }}>
+                <div style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.5)", marginBottom: 6 }}>
+                  Estimated Investment
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {platforms.map((p) => {
-                    const sel = platform === p.id;
-                    return (
-                      <button
-                        key={p.id}
-                        type="button"
-                        onClick={() => setPlatform(p.id)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "12px 16px",
-                          borderRadius: 12,
-                          border: `1px solid ${sel ? "rgba(37,99,235,0.4)" : "rgba(255,255,255,0.06)"}`,
-                          background: sel ? "rgba(37,99,235,0.08)" : "rgba(255,255,255,0.02)",
-                          cursor: "pointer",
-                          transition: "all 0.15s",
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                          <span style={{ fontSize: "1.125rem" }}>{p.emoji}</span>
-                          <span style={{ fontSize: "0.9rem", fontWeight: 600, color: sel ? "#E2E8F0" : "#94A3B8" }}>{p.label}</span>
-                        </div>
-                        {sel && (
-                          <div
-                            style={{
-                              width: 18,
-                              height: 18,
-                              borderRadius: "50%",
-                              background: "#2563EB",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <Check size={10} style={{ color: "#fff" }} />
-                          </div>
-                        )}
-                      </button>
-                    );
-                  })}
+                <div
+                  style={{
+                    fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
+                    fontWeight: 900,
+                    color: "#FFFFFF",
+                    fontFamily: "ui-monospace, monospace",
+                    letterSpacing: "-0.04em",
+                    lineHeight: 1,
+                  }}
+                >
+                  ${calculatedEstimate.min.toLocaleString()} – ${calculatedEstimate.max.toLocaleString()}
+                </div>
+                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginTop: 6 }}>
+                  *USD — Includes sprint QA, code review & IP transfer.
                 </div>
               </div>
 
-              {/* Design */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                  <div className="step-num">02</div>
-                  <p style={{ fontWeight: 700, color: "#CBD5E1", fontSize: "0.9375rem" }}>Design complexity</p>
+              {/* Stats Bar */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1rem",
+                  padding: "1rem",
+                  borderRadius: 14,
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  marginBottom: "1.75rem",
+                }}
+              >
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>
+                    <Clock size={12} style={{ color: "#06B6D4" }} />
+                    Timeline
+                  </div>
+                  <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff" }}>
+                    ~{calculatedEstimate.weeks} Weeks
+                  </div>
                 </div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  {designs.map((d) => {
-                    const sel = design === d.id;
-                    return (
-                      <button
-                        key={d.id}
-                        type="button"
-                        onClick={() => setDesign(d.id)}
-                        style={{
-                          flex: 1,
-                          padding: "12px 8px",
-                          borderRadius: 12,
-                          border: `1px solid ${sel ? "rgba(37,99,235,0.4)" : "rgba(255,255,255,0.06)"}`,
-                          background: sel ? "rgba(37,99,235,0.08)" : "rgba(255,255,255,0.02)",
-                          cursor: "pointer",
-                          textAlign: "center",
-                          transition: "all 0.15s",
-                        }}
-                      >
-                        <div style={{ fontSize: "0.875rem", fontWeight: 700, color: sel ? "#E2E8F0" : "#94A3B8", marginBottom: 3 }}>
-                          {d.label}
-                        </div>
-                        <div style={{ fontSize: "0.6875rem", color: "#64748B" }}>{d.note}</div>
-                      </button>
-                    );
-                  })}
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>
+                    <Shield size={12} style={{ color: "#06B6D4" }} />
+                    Warranty
+                  </div>
+                  <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff" }}>
+                    60 Days Free
+                  </div>
                 </div>
               </div>
 
-              {/* Timeline */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                  <div className="step-num">03</div>
-                  <p style={{ fontWeight: 700, color: "#CBD5E1", fontSize: "0.9375rem" }}>Delivery timeline</p>
-                </div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  {timelines.map((tl) => {
-                    const sel = timeline === tl.id;
-                    return (
-                      <button
-                        key={tl.id}
-                        type="button"
-                        onClick={() => setTimeline(tl.id)}
-                        style={{
-                          flex: 1,
-                          padding: "12px 8px",
-                          borderRadius: 12,
-                          border: `1px solid ${sel ? "rgba(37,99,235,0.4)" : "rgba(255,255,255,0.06)"}`,
-                          background: sel ? "rgba(37,99,235,0.08)" : "rgba(255,255,255,0.02)",
-                          cursor: "pointer",
-                          textAlign: "center",
-                          transition: "all 0.15s",
-                        }}
-                      >
-                        <div style={{ fontSize: "0.875rem", fontWeight: 700, color: sel ? "#E2E8F0" : "#94A3B8", marginBottom: 3 }}>
-                          {tl.label}
-                        </div>
-                        <div style={{ fontSize: "0.6875rem", color: "#64748B" }}>{tl.sub}</div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Right column: features + form */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              {/* Add-on features */}
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                  <div className="step-num">04</div>
-                  <p style={{ fontWeight: 700, color: "#CBD5E1", fontSize: "0.9375rem" }}>Add-on features</p>
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  {features.map((f) => {
-                    const checked = selectedFeatures.includes(f.id);
-                    return (
-                      <button
-                        key={f.id}
-                        type="button"
-                        onClick={() => toggleFeature(f.id)}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "11px 14px",
-                          borderRadius: 12,
-                          border: `1px solid ${checked ? "rgba(37,99,235,0.35)" : "rgba(255,255,255,0.06)"}`,
-                          background: checked ? "rgba(37,99,235,0.07)" : "rgba(255,255,255,0.02)",
-                          cursor: "pointer",
-                          transition: "all 0.15s",
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span style={{ fontSize: "1rem" }}>{f.emoji}</span>
-                          <span style={{ fontSize: "0.875rem", fontWeight: 600, color: checked ? "#E2E8F0" : "#94A3B8" }}>{f.label}</span>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                          <span style={{ fontSize: "0.75rem", color: "#64748B", fontFamily: "ui-monospace, monospace" }}>
-                            +${f.price.toLocaleString()}
-                          </span>
-                          <div
-                            style={{
-                              width: 18,
-                              height: 18,
-                              borderRadius: 5,
-                              border: `1px solid ${checked ? "#2563EB" : "rgba(255,255,255,0.15)"}`,
-                              background: checked ? "#2563EB" : "transparent",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              flexShrink: 0,
-                            }}
-                          >
-                            {checked && <Check size={10} style={{ color: "#fff" }} />}
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Lead form */}
+              {/* Form / Lead capture */}
               {!submitted ? (
+                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+                  <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#fff", marginBottom: 2 }}>
+                    Save & Lock In This Estimate
+                  </div>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Your Full Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={{
+                      padding: "0.75rem 1rem",
+                      borderRadius: 10,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "#fff",
+                      fontSize: "0.875rem",
+                      outline: "none",
+                    }}
+                  />
+                  <input
+                    type="email"
+                    required
+                    placeholder="Work Email Address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{
+                      padding: "0.75rem 1rem",
+                      borderRadius: 10,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "#fff",
+                      fontSize: "0.875rem",
+                      outline: "none",
+                    }}
+                  />
+                  <input
+                    type="tel"
+                    placeholder="Phone or WhatsApp (Optional)"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    style={{
+                      padding: "0.75rem 1rem",
+                      borderRadius: 10,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      color: "#fff",
+                      fontSize: "0.875rem",
+                      outline: "none",
+                    }}
+                  />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-brand"
+                    style={{ width: "100%", justifyContent: "center", marginTop: 6 }}
+                  >
+                    {isSubmitting ? "Locking In Estimate..." : "Get Detailed Proposal & Roadmap"}
+                    <ArrowRight size={16} />
+                  </button>
+                  <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", textAlign: "center" }}>
+                    No spam. We reply within 2 business hours with an architectural breakdown.
+                  </p>
+                </form>
+              ) : (
                 <div
                   style={{
                     padding: "1.5rem",
                     borderRadius: 16,
-                    background: "rgba(255,255,255,0.025)",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                  }}
-                >
-                  <div style={{ marginBottom: 16 }}>
-                    <div style={{ fontSize: "1rem", fontWeight: 700, color: "#F8FAFC", marginBottom: 4 }}>
-                      🎯 Get an Exact Proposal
-                    </div>
-                    <p style={{ fontSize: "0.8125rem", color: "#64748B" }}>
-                      We'll review your spec and send a detailed proposal within 4 hours.
-                    </p>
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                    {[
-                      { key: "name", placeholder: "Your full name", type: "text" },
-                      { key: "email", placeholder: "Work email address", type: "email" },
-                      { key: "phone", placeholder: "WhatsApp / phone (optional)", type: "tel" },
-                    ].map((field) => (
-                      <input
-                        key={field.key}
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        value={form[field.key as keyof typeof form]}
-                        onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                        style={{
-                          width: "100%",
-                          padding: "11px 16px",
-                          borderRadius: 10,
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          background: "rgba(255,255,255,0.04)",
-                          color: "#F8FAFC",
-                          fontSize: "0.875rem",
-                          outline: "none",
-                          boxSizing: "border-box",
-                          transition: "border-color 0.15s",
-                        }}
-                        onFocus={(e) => ((e.currentTarget as HTMLInputElement).style.borderColor = "rgba(37,99,235,0.5)")}
-                        onBlur={(e) => ((e.currentTarget as HTMLInputElement).style.borderColor = "rgba(255,255,255,0.08)")}
-                      />
-                    ))}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (form.name && form.email) setSubmitted(true);
-                      }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: 8,
-                        padding: "12px",
-                        borderRadius: 12,
-                        background: "linear-gradient(135deg, #2563EB, #1D4ED8)",
-                        color: "#fff",
-                        fontWeight: 700,
-                        fontSize: "0.9375rem",
-                        border: "none",
-                        cursor: "pointer",
-                        boxShadow: "0 4px 14px rgba(37,99,235,0.4)",
-                        transition: "all 0.2s",
-                      }}
-                    >
-                      Send Proposal Request
-                      <ArrowRight size={15} />
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div
-                  style={{
-                    padding: "2rem",
-                    borderRadius: 16,
-                    background: "rgba(34,197,94,0.05)",
-                    border: "1px solid rgba(34,197,94,0.2)",
+                    background: "rgba(16,185,129,0.1)",
+                    border: "1px solid rgba(16,185,129,0.3)",
                     textAlign: "center",
                   }}
                 >
-                  <div style={{ fontSize: "2rem", marginBottom: 12 }}>✅</div>
-                  <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "#F8FAFC", marginBottom: 8 }}>
-                    Proposal request received!
-                  </h4>
-                  <p style={{ fontSize: "0.875rem", color: "#64748B", lineHeight: 1.6 }}>
-                    We'll send a detailed architecture brief and proposal to <strong style={{ color: "#94A3B8" }}>{form.email}</strong> within 4 hours.
+                  <CheckCircle2 size={36} style={{ color: "#10B981", margin: "0 auto 0.75rem" }} />
+                  <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff", marginBottom: 4 }}>
+                    Estimate Locked In!
+                  </div>
+                  <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.5, marginBottom: "1rem" }}>
+                    Thanks {name}! We’ve received your scope requirements. Our Principal Architect will review and send your full PDF proposal to <strong>{email}</strong> within 2 hours.
                   </p>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "#06B6D4",
+                      fontSize: "0.8125rem",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    Recalculate with different scope
+                  </button>
                 </div>
               )}
-
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );

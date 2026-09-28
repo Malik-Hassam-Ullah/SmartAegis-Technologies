@@ -1,365 +1,365 @@
 "use client";
 
 import React, { useState } from "react";
-import { FileSearch, Palette, Code2, Rocket, CheckCircle2 } from "lucide-react";
+import {
+  Compass,
+  Layout,
+  Code2,
+  ShieldAlert,
+  Rocket,
+  CheckCircle2,
+  Clock,
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
 
-const phases = [
-  {
-    number: "01",
-    icon: FileSearch,
-    iconColor: "#60A5FA",
-    iconBg: "rgba(37,99,235,0.15)",
-    word: "Discover",
-    title: "Discovery & Architecture Planning",
-    duration: "1–2 weeks",
-    description:
-      "We dissect your business goals, data topology, scaling requirements, and compliance constraints. Our architects produce a comprehensive technical blueprint — before a single line of code is written.",
-    deliverables: [
-      "System architecture diagram & data flow",
-      "Database schema & API contract design",
-      "Technology stack recommendation",
-      "Sprint roadmap with velocity estimates",
-      "Security & threat model assessment",
-    ],
-    code: `// aegis-discovery.ts
-const blueprint = await system.architect({
-  product: "EnterprisePortal",
-  scale: "100k+ concurrent users",
-  compliance: ["SOC2", "ISO27001"],
-  uptime: 99.98,
-});
-
-// ✅ Architecture approved & documented
-blueprint.generateRoadmap({ sprints: 8 });
-console.log("Blueprint ready — team kickoff in 48h");`,
-  },
-  {
-    number: "02",
-    icon: Palette,
-    iconColor: "#A78BFA",
-    iconBg: "rgba(139,92,246,0.15)",
-    word: "Design",
-    title: "UI/UX Design & Prototyping",
-    duration: "1–3 weeks",
-    description:
-      "Our designers build a tokenised Figma system that maps directly to production CSS. Every component is validated for accessibility, tested across breakpoints, and approved before we build.",
-    deliverables: [
-      "Tokenised Figma component library",
-      "Interactive clickable prototype",
-      "WCAG 2.1 AA accessibility audit",
-      "Tailwind CSS token configuration",
-      "Storybook component documentation",
-    ],
-    code: `// design-tokens.ts
-export const tokens = {
-  color: {
-    primary:  "#2563EB",
-    surface:  "#0D1630",
-    text:     "#F8FAFC",
-  },
-  radius: { card: "20px", btn: "12px" },
-  shadow: {
-    card: "0 20px 60px rgba(0,0,0,0.4)",
-  },
-  // ✅ Figma → Tailwind sync complete
-};`,
-  },
-  {
-    number: "03",
-    icon: Code2,
-    iconColor: "#86EFAC",
-    iconBg: "rgba(34,197,94,0.12)",
-    word: "Build",
-    title: "Agile Development & QA",
-    duration: "4–10 weeks",
-    description:
-      "Senior engineers ship in 2-week sprints. Every commit triggers automated testing, static analysis, and vulnerability scanning. You review live staging previews and communicate directly on Slack.",
-    deliverables: [
-      "Clean TypeScript codebase (strict mode)",
-      "85%+ test coverage (unit + integration)",
-      "OWASP Top 10 security hardening",
-      "Bi-weekly staging deployments",
-      "Full PR audit trail with code review",
-    ],
-    code: `$ npm run test:ci --coverage
-
-✓ Test Suites:  48 passed, 0 failed
-✓ Tests:        312 passed, 0 failed
-✓ Statements:   92.4% coverage
-✓ SAST scan:    0 critical vulnerabilities
-✓ Performance:  Lighthouse 97/100
-
-→ All checks passed. Deploying to staging...`,
-  },
-  {
-    number: "04",
-    icon: Rocket,
-    iconColor: "#FCA5A5",
-    iconBg: "rgba(239,68,68,0.12)",
-    word: "Scale",
-    title: "Launch, DevOps & Growth",
-    duration: "Ongoing",
-    description:
-      "We deploy to globally distributed cloud infrastructure with zero-downtime rolling updates. Automated telemetry, autoscaling, and 24/7 SRE cover keep your product healthy at any traffic volume.",
-    deliverables: [
-      "Zero-downtime CI/CD pipeline",
-      "Terraform infrastructure-as-code",
-      "Multi-region database replication",
-      "24/7 Datadog / Prometheus monitoring",
-      "30-day post-launch warranty coverage",
-    ],
-    code: `# terraform/production.tf
-resource "aws_ecs_service" "aegis_app" {
-  name          = "aegis-prod"
-  cluster       = aws_ecs_cluster.main.id
-  desired_count = 6
-
-  deployment_circuit_breaker {
-    enable   = true
-    rollback = true
-  }
+interface Phase {
+  id: string;
+  step: string;
+  title: string;
+  subtitle: string;
+  duration: string;
+  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties }>;
+  accentColor: string;
+  description: string;
+  deliverables: string[];
+  keyOutcome: string;
 }
-# ✅ Deployed — 6 replicas running globally`,
+
+const PHASES: Phase[] = [
+  {
+    id: "discovery",
+    step: "01",
+    title: "Discovery & Architectural Blueprint",
+    subtitle: "Define specifications, database schemas & compliance constraints before coding.",
+    duration: "Week 1–2",
+    icon: Compass,
+    accentColor: "#06B6D4",
+    description:
+      "We unpack your business goals, user personas, third-party API dependencies, and infrastructure scaling criteria. Senior Solution Architects deliver an immutable technical specification document.",
+    deliverables: [
+      "System architecture diagram & data relationship modeling",
+      "API contracts & OpenAPI / Swagger schemas",
+      "Cloud infrastructure cost estimation & vendor selection",
+      "Risk assessment & data privacy compliance roadmap",
+      "Detailed bi-weekly sprint backlog with velocity commitments",
+    ],
+    keyOutcome: "A locked architectural blueprint preventing scope creep and costly rewrites.",
+  },
+  {
+    id: "design",
+    step: "02",
+    title: "UI/UX & Design System Tokens",
+    subtitle: "Create high-fidelity interactive prototypes in Figma mapped 1:1 to code tokens.",
+    duration: "Week 2–3",
+    icon: Layout,
+    accentColor: "#8B5CF6",
+    description:
+      "We design an atomic design system with comprehensive component libraries, dark/light states, and responsive breakpoints. Stakeholders experience clickable prototypes before frontend build begins.",
+    deliverables: [
+      "Production-ready Figma token library (colors, typography, grid)",
+      "Fully interactive clickable prototypes for mobile & desktop",
+      "WCAG 2.1 AA accessibility & international usability audits",
+      "Micro-interaction choreography & animation specs",
+      "Direct code handoff to Tailwind CSS / CSS variable tokens",
+    ],
+    keyOutcome: "Zero discrepancy between approved Figma designs and deployed production software.",
+  },
+  {
+    id: "sprint",
+    step: "03",
+    title: "Agile Sprint Build & Automated CI/CD",
+    subtitle: "Bi-weekly sprint demos with working software deployed to staging environments.",
+    duration: "Week 3–8+",
+    icon: Code2,
+    accentColor: "#3B82F6",
+    description:
+      "Senior full-stack engineers execute clean, modular code with strict typing. Every commit triggers automated build pipelines, unit tests, and continuous preview deployments for your team to test.",
+    deliverables: [
+      "TypeScript strict mode codebase with zero technical debt",
+      "Automated GitHub Actions CI/CD with linting & test suites",
+      "Isolated staging environments for client review and feedback",
+      "Bi-weekly sprint demo meetings and progress velocity reports",
+      "Direct Slack/Discord access to the engineering pod lead",
+    ],
+    keyOutcome: "Continuous visibility into working software with zero guesswork or radio silence.",
+  },
+  {
+    id: "qa-security",
+    step: "04",
+    title: "QA, Security & Penetration Testing",
+    subtitle: "Rigorous automated & manual verification to ensure defense-grade reliability.",
+    duration: "Week 7–9",
+    icon: ShieldAlert,
+    accentColor: "#10B981",
+    description:
+      "Before production cutover, our dedicated QA engineers stress-test every workflow. We execute cross-browser matrix audits, simulated DDoS load tests, SQL/XSS vulnerability assessments, and edge cases.",
+    deliverables: [
+      "Automated End-to-End (E2E) testing with Playwright / Cypress",
+      "High-concurrency load testing (k6) simulating 100k+ users",
+      "OWASP Top 10 vulnerability remediation & dependency audits",
+      "Cross-device mobile testing across 30+ physical device configurations",
+      "Core Web Vitals & Lighthouse score optimization (95+ score target)",
+    ],
+    keyOutcome: "A bulletproof, production-verified system with 99.98% guaranteed uptime readiness.",
+  },
+  {
+    id: "deployment",
+    step: "05",
+    title: "Zero-Downtime Launch & 24/7 SLA Scaling",
+    subtitle: "Seamless DNS cutover, real-time observability & guaranteed post-launch warranty.",
+    duration: "Ongoing",
+    icon: Rocket,
+    accentColor: "#F59E0B",
+    description:
+      "We orchestrate smooth blue/green DNS cutover with zero downtime. Post-launch, we activate Datadog/Grafana telemetry, 60-day complimentary bug warranty, and flexible maintenance agreements.",
+    deliverables: [
+      "Zero-downtime blue/green DNS switchover & SSL configuration",
+      "Comprehensive Datadog / Sentry real-time error tracking",
+      "60-day 100% complimentary bug warranty & developer support",
+      "Full IP ownership, repository handover & documentation walkthrough",
+      "Monthly SLA maintenance & autoscaling cloud management",
+    ],
+    keyOutcome: "Flawless launch execution with ongoing protection against downtime or regressions.",
   },
 ];
 
 export function Process() {
-  const [active, setActive] = useState(0);
-  const current = phases[active];
-  const PhaseIcon = current.icon;
+  const [activePhaseIndex, setActivePhaseIndex] = useState<number>(0);
+  const activePhase = PHASES[activePhaseIndex];
+  const Icon = activePhase.icon;
 
   return (
-    <section id="process" className="section" style={{ background: "#070B19", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      <div className="container">
-
-        {/* Header */}
-        <div className="section-header center">
-          <div className="eyebrow">How We Work</div>
-          <h2 className="h2" style={{ marginBottom: "1.25rem", maxWidth: 560, margin: "0 auto 1.25rem" }}>
-            A Process You Can{" "}
+    <section
+      id="process"
+      style={{
+        background: "#080812",
+        padding: "6rem 0",
+        position: "relative",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      <div className="container-page">
+        {/* Section Header */}
+        <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
+          <div className="eyebrow">
+            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            ENGINEERING WORKFLOW
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              color: "#FFFFFF",
+              lineHeight: 1.15,
+              marginBottom: "1rem",
+            }}
+          >
+            How We Deliver{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #60A5FA, #818CF8)",
+                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
             >
-              Hold Us To.
+              Mission-Critical Software
             </span>
           </h2>
-          <p className="body-lg" style={{ maxWidth: 500, margin: "0 auto" }}>
-            Four phases. Clear deliverables at each milestone. Direct Slack access to the engineer building your product.
+          <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>
+            A disciplined, transparent 5-stage agile lifecycle engineered to remove risk, maintain
+            predictable momentum, and launch products on schedule.
           </p>
         </div>
 
-        {/* Phase stepper tabs */}
+        {/* Phase Stepper Navigation */}
         <div
           style={{
-            display: "flex",
-            gap: 8,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))",
+            gap: "0.75rem",
             marginBottom: "2.5rem",
-            background: "#0C1226",
-            border: "1px solid rgba(255,255,255,0.07)",
-            borderRadius: 16,
-            padding: 6,
           }}
         >
-          {phases.map((p, i) => {
-            const Icon = p.icon;
-            const isActive = active === i;
+          {PHASES.map((p, idx) => {
+            const isCurrent = idx === activePhaseIndex;
             return (
               <button
-                key={p.number}
-                type="button"
-                onClick={() => setActive(i)}
+                key={p.id}
+                onClick={() => setActivePhaseIndex(idx)}
                 style={{
-                  flex: 1,
+                  background: isCurrent ? "#0D0D1A" : "rgba(255,255,255,0.02)",
+                  border: isCurrent ? `1px solid ${p.accentColor}` : "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 14,
+                  padding: "1rem 1.25rem",
+                  textAlign: "left",
+                  cursor: "pointer",
+                  transition: "all 0.2s ease",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                  padding: "12px 16px",
-                  borderRadius: 12,
-                  border: "none",
-                  cursor: "pointer",
-                  background: isActive
-                    ? "linear-gradient(135deg, rgba(37,99,235,0.15), rgba(99,102,241,0.1))"
-                    : "transparent",
-                  borderColor: isActive ? "rgba(37,99,235,0.3)" : "transparent",
-                  borderWidth: 1,
-                  borderStyle: "solid",
-                  transition: "all 0.2s",
+                  gap: 12,
                 }}
               >
-                <Icon size={16} style={{ color: isActive ? p.iconColor : "#475569", flexShrink: 0 }} />
-                <span
+                <div
                   style={{
                     fontSize: "0.875rem",
-                    fontWeight: 700,
-                    color: isActive ? "#E2E8F0" : "#64748B",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {p.word}
-                </span>
-                <span
-                  style={{
-                    fontSize: "0.6875rem",
+                    fontWeight: 900,
                     fontFamily: "ui-monospace, monospace",
-                    color: isActive ? p.iconColor : "#475569",
-                    fontWeight: 700,
+                    color: isCurrent ? p.accentColor : "rgba(255,255,255,0.3)",
                   }}
                 >
-                  {p.number}
-                </span>
+                  {p.step}
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontSize: "0.845rem",
+                      fontWeight: 700,
+                      color: isCurrent ? "#FFFFFF" : "rgba(255,255,255,0.6)",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {p.title.split("&")[0].trim()}
+                  </div>
+                  <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)" }}>
+                    {p.duration}
+                  </div>
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Content grid */}
+        {/* Active Phase Deep Dive Card */}
         <div
           style={{
+            background: "#0D0D1A",
+            border: `1px solid ${activePhase.accentColor}33`,
+            borderRadius: 24,
+            padding: "2.5rem",
+            boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 40px ${activePhase.accentColor}10`,
             display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "2rem",
-            background: "#0D1630",
-            border: "1px solid rgba(255,255,255,0.07)",
-            borderRadius: 20,
-            overflow: "hidden",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "2.5rem",
+            alignItems: "center",
           }}
         >
-          {/* Left: description */}
-          <div style={{ padding: "2.5rem" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.5rem" }}>
+          {/* Left Details */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.25rem" }}>
               <div
                 style={{
-                  width: 44,
-                  height: 44,
+                  width: 48,
+                  height: 48,
                   borderRadius: 12,
-                  background: current.iconBg,
-                  border: `1px solid ${current.iconColor}30`,
+                  background: `${activePhase.accentColor}18`,
+                  border: `1px solid ${activePhase.accentColor}40`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <PhaseIcon size={22} style={{ color: current.iconColor }} />
+                <Icon size={24} style={{ color: activePhase.accentColor }} />
               </div>
-              <span
-                style={{
-                  padding: "4px 12px",
-                  borderRadius: 100,
-                  fontSize: "0.6875rem",
-                  fontWeight: 800,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  color: current.iconColor,
-                  background: current.iconBg,
-                  border: `1px solid ${current.iconColor}30`,
-                }}
-              >
-                {current.duration}
-              </span>
+              <div>
+                <span
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 800,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: activePhase.accentColor,
+                    fontFamily: "ui-monospace, monospace",
+                  }}
+                >
+                  PHASE {activePhase.step} • {activePhase.duration}
+                </span>
+                <h3 style={{ fontSize: "1.625rem", fontWeight: 800, color: "#fff" }}>
+                  {activePhase.title}
+                </h3>
+              </div>
             </div>
 
-            <h3 className="h3" style={{ marginBottom: "1rem", fontSize: "1.5rem" }}>
-              {current.title}
-            </h3>
-            <p className="body" style={{ marginBottom: "1.75rem", lineHeight: 1.75 }}>
-              {current.description}
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
+              {activePhase.description}
             </p>
 
-            <p style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569", marginBottom: "1rem" }}>
-              Key deliverables
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {current.deliverables.map((d) => (
-                <div key={d} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                  <CheckCircle2 size={15} style={{ color: current.iconColor, flexShrink: 0, marginTop: 2 }} />
-                  <span style={{ fontSize: "0.9rem", color: "#94A3B8" }}>{d}</span>
+            {/* Key Outcome Highlight */}
+            <div
+              style={{
+                padding: "1rem 1.25rem",
+                borderRadius: 12,
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <div style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#22D3EE", marginBottom: 3 }}>
+                Guaranteed Milestone Outcome
+              </div>
+              <div style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.85)", fontWeight: 500 }}>
+                {activePhase.keyOutcome}
+              </div>
+            </div>
+
+            <a href="#contact" className="btn-brand">
+              Kickstart Phase 01 Discovery
+              <ArrowRight size={16} />
+            </a>
+          </div>
+
+          {/* Right Deliverables List */}
+          <div
+            style={{
+              background: "#080812",
+              border: "1px solid rgba(255,255,255,0.06)",
+              borderRadius: 18,
+              padding: "2rem",
+            }}
+          >
+            <div
+              style={{
+                fontSize: "0.8125rem",
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                color: "rgba(255,255,255,0.5)",
+                marginBottom: "1.25rem",
+              }}
+            >
+              Documented Deliverables for Phase {activePhase.step}
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+              {activePhase.deliverables.map((del, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: 12,
+                    padding: "10px 12px",
+                    borderRadius: 10,
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.04)",
+                  }}
+                >
+                  <CheckCircle2
+                    size={16}
+                    style={{ color: activePhase.accentColor, flexShrink: 0, marginTop: 3 }}
+                  />
+                  <span style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.8)", lineHeight: 1.4 }}>
+                    {del}
+                  </span>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Right: code terminal */}
-          <div
-            style={{
-              background: "#020509",
-              borderLeft: "1px solid rgba(255,255,255,0.05)",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {/* Terminal chrome */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "14px 20px",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
-              }}
-            >
-              {["#FF5F57", "#FEBC2E", "#28C840"].map((c) => (
-                <span key={c} style={{ width: 10, height: 10, borderRadius: "50%", background: c }} />
-              ))}
-              <span
-                style={{
-                  flex: 1,
-                  textAlign: "center",
-                  fontSize: "0.6875rem",
-                  color: "rgba(255,255,255,0.2)",
-                  fontFamily: "ui-monospace, monospace",
-                }}
-              >
-                aegis — phase-{current.number}.ts
-              </span>
-            </div>
-            {/* Code content */}
-            <pre
-              style={{
-                margin: 0,
-                padding: "1.5rem",
-                fontFamily: "'Fira Code', 'SF Mono', ui-monospace, monospace",
-                fontSize: "0.8125rem",
-                lineHeight: 1.75,
-                color: "#94A3B8",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
-                flexGrow: 1,
-              }}
-              dangerouslySetInnerHTML={{
-                __html: current.code
-                  .replace(/\/\/ ✅/g, '<span style="color:#86EFAC">// ✅</span>')
-                  .replace(/#.*/g, (m) => `<span style="color:#64748B">${m}</span>`)
-                  .replace(/→/g, '<span style="color:#60A5FA">→</span>')
-                  .replace(/✓/g, '<span style="color:#86EFAC">✓</span>'),
-              }}
-            />
-          </div>
         </div>
-
-        {/* Timeline progress bar */}
-        <div style={{ marginTop: "2rem", display: "flex", gap: 6 }}>
-          {phases.map((p, i) => (
-            <div
-              key={p.number}
-              onClick={() => setActive(i)}
-              style={{
-                flex: 1,
-                height: 4,
-                borderRadius: 100,
-                background: i <= active ? "linear-gradient(90deg, #2563EB, #6366F1)" : "rgba(255,255,255,0.06)",
-                cursor: "pointer",
-                transition: "all 0.3s",
-              }}
-            />
-          ))}
-        </div>
-
       </div>
     </section>
   );

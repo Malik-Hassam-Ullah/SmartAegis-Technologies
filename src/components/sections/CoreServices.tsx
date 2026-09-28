@@ -1,196 +1,302 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, Globe, Smartphone, Layers, Figma, CheckCircle2, X } from "lucide-react";
+import {
+  Globe,
+  Smartphone,
+  Layers,
+  Figma,
+  Bot,
+  ShieldCheck,
+  ArrowRight,
+  CheckCircle2,
+  X,
+  Sparkles,
+  ExternalLink,
+} from "lucide-react";
 
-const services = [
+interface ServiceItem {
+  id: string;
+  icon: React.ComponentType<{ size?: number; style?: React.CSSProperties; className?: string }>;
+  accentColor: string;
+  badgeBg: string;
+  badgeBorder: string;
+  category: string;
+  title: string;
+  tagline: string;
+  description: string;
+  deliverables: string[];
+  techStack: string[];
+  metrics: string;
+}
+
+const SERVICES: ServiceItem[] = [
   {
-    id: "web",
+    id: "web-dev",
     icon: Globe,
-    iconBox: "blue",
-    badgeColor: "#3B82F6",
-    badgeBg: "rgba(37,99,235,0.12)",
-    badgeBorder: "rgba(37,99,235,0.25)",
-    title: "Custom Web Development",
-    short: "Next.js · React · PWAs · High-Speed Portals",
+    accentColor: "#06B6D4",
+    badgeBg: "rgba(6, 182, 212, 0.12)",
+    badgeBorder: "rgba(6, 182, 212, 0.25)",
+    category: "Full-Stack Web",
+    title: "Custom Web Applications",
+    tagline: "Ultra-fast, responsive web apps built for high conversion & infinite scale.",
     description:
-      "We craft blazing-fast, SEO-optimised web applications from marketing sites to real-time SaaS platforms. Built on modern edge-ready infrastructure that scales with your growth.",
-    features: [
-      "Next.js App Router with edge rendering",
-      "Progressive Web Apps (PWA) & offline support",
-      "REST / GraphQL API integration layer",
-      "Headless CMS (Sanity, Contentful, Strapi)",
-      "Core Web Vitals & performance optimisation",
-      "Micro-frontend & modular architecture",
+      "We design and build production-grade web applications from high-speed enterprise portals to interactive SaaS frontends. Leveraging Next.js App Router, React, and edge infrastructure to deliver sub-second load times and flawless SEO performance.",
+    deliverables: [
+      "Next.js 15 & React Server Components (RSC)",
+      "High-performance REST & GraphQL API layers",
+      "Progressive Web Apps (PWA) with offline capabilities",
+      "Headless CMS integration (Sanity, Strapi, Contentful)",
+      "Core Web Vitals 95+ score optimization",
+      "Robust CI/CD deployment pipelines on Vercel & AWS",
     ],
-    tags: ["Next.js", "React", "TypeScript", "GraphQL", "Tailwind"],
+    techStack: ["Next.js", "React", "TypeScript", "Node.js", "Tailwind CSS", "GraphQL"],
+    metrics: "99.98% Uptime | Sub-800ms Page Loads",
   },
   {
-    id: "mobile",
+    id: "mobile-apps",
     icon: Smartphone,
-    iconBox: "violet",
-    badgeColor: "#8B5CF6",
-    badgeBg: "rgba(139,92,246,0.12)",
-    badgeBorder: "rgba(139,92,246,0.25)",
-    title: "Mobile App Engineering",
-    short: "iOS · Android · React Native · Flutter",
+    accentColor: "#3B82F6",
+    badgeBg: "rgba(59, 130, 246, 0.12)",
+    badgeBorder: "rgba(59, 130, 246, 0.25)",
+    category: "Mobile Engineering",
+    title: "Mobile App Development",
+    tagline: "Award-winning iOS & Android mobile apps engineered with single-codebase velocity.",
     description:
-      "Native-feeling apps shipped simultaneously to iOS and Android. We handle biometric auth, real-time sync, geolocation, push notifications, and App Store CI/CD pipelines.",
-    features: [
-      "Flutter & React Native cross-platform builds",
-      "Offline-first encrypted local storage",
-      "Native biometric authentication",
-      "Real-time geolocation & live maps",
-      "App Store & Play Store automated pipelines",
-      "OTA update delivery & crash analytics",
+      "From zero to App Store and Google Play launch, we craft native-performing mobile experiences. We integrate biometric authentication, real-time websockets, background sync, dynamic geolocation, and push notification systems.",
+    deliverables: [
+      "Flutter & React Native cross-platform excellence",
+      "Native Swift (iOS) and Kotlin (Android) modules",
+      "Biometric FaceID/TouchID security protocols",
+      "Real-time GPS tracking & interactive Mapbox integrations",
+      "Offline-first SQLite/WatermelonDB data synchronization",
+      "Automated Fastlane deployment to TestFlight & Google Play",
     ],
-    tags: ["Flutter", "React Native", "Swift", "Kotlin", "Firebase"],
+    techStack: ["Flutter", "React Native", "Swift", "Kotlin", "Firebase", "SQLite"],
+    metrics: "4.8+ App Store Average Rating across 20+ apps",
   },
   {
-    id: "saas",
+    id: "enterprise-saas",
     icon: Layers,
-    iconBox: "green",
-    badgeColor: "#22C55E",
-    badgeBg: "rgba(34,197,94,0.1)",
-    badgeBorder: "rgba(34,197,94,0.25)",
-    title: "Enterprise Software & SaaS",
-    short: "Custom ERPs · Workflows · Cloud Platforms",
+    accentColor: "#10B981",
+    badgeBg: "rgba(16, 185, 129, 0.12)",
+    badgeBorder: "rgba(16, 185, 129, 0.25)",
+    category: "Cloud & SaaS",
+    title: "Enterprise SaaS & Cloud Systems",
+    tagline: "Multi-tenant cloud architectures designed to process millions of transactions securely.",
     description:
-      "Purpose-built SaaS platforms with multi-tenant isolation, subscription billing, admin tooling, and elastic cloud infrastructure — ready for enterprise procurement and compliance.",
-    features: [
-      "Multi-tenant architecture with schema isolation",
-      "Stripe / Lemon Squeezy billing & webhooks",
-      "Role-based access control (RBAC)",
-      "Event-driven microservices on Kafka/RabbitMQ",
-      "SOC2 / ISO27001 compliance pathways",
-      "Terraform infrastructure-as-code (IaC)",
+      "We architect enterprise platforms with robust multi-tenant isolation, complex subscription monetization, granular role-based permissions (RBAC), and automated audit logging engineered for SOC2 and ISO27001 readiness.",
+    deliverables: [
+      "Multi-tenant tenant schema & database isolation",
+      "Stripe Billing & Lemon Squeezy recurring engine",
+      "Granular RBAC & SAML/SSO enterprise authentication",
+      "Asynchronous microservices with Kafka & Redis BullMQ",
+      "Elastic autoscaling clusters with Docker & Kubernetes",
+      "Automated compliance audit logs & disaster recovery plans",
     ],
-    tags: ["Go", "Python", "AWS", "Docker", "Kafka", "PostgreSQL"],
+    techStack: ["Go", "Python", "PostgreSQL", "Redis", "Docker", "Kubernetes", "AWS"],
+    metrics: "Processing $25M+ in annual client billing volume",
   },
   {
-    id: "design",
+    id: "product-design",
     icon: Figma,
-    iconBox: "indigo",
-    badgeColor: "#6366F1",
-    badgeBg: "rgba(99,102,241,0.12)",
-    badgeBorder: "rgba(99,102,241,0.25)",
-    title: "UI/UX & Product Design",
-    short: "Figma Prototyping · Wireframes · Design Systems",
+    accentColor: "#8B5CF6",
+    badgeBg: "rgba(139, 92, 246, 0.12)",
+    badgeBorder: "rgba(139, 92, 246, 0.25)",
+    category: "UI/UX & Product",
+    title: "UI/UX & Design Systems",
+    tagline: "Intuitive product design that captivates users and accelerates dev handover.",
     description:
-      "Design systems that translate directly to production code. We run discovery, wireframing, and UX audits — then hand off Figma tokens that map 1:1 to your component library.",
-    features: [
-      "Figma component library & design tokens",
-      "Interactive high-fidelity prototypes",
-      "WCAG 2.1 AA accessibility compliance",
-      "UX flow audits & journey mapping",
-      "Figma → Tailwind / CSS direct token sync",
-      "Storybook component documentation",
+      "Great software begins with human-centered research. We conduct user discovery, wireframing, interactive prototyping, and build living Figma design systems mapped 1:1 to code tokens, guaranteeing zero design-to-code drift.",
+    deliverables: [
+      "Complete design tokens library (colors, typography, spacing)",
+      "Clickable, interactive high-fidelity Figma prototypes",
+      "WCAG 2.1 AA international accessibility standards",
+      "Comprehensive user journey & conversion funnel mapping",
+      "Custom micro-interactions & motion design specs",
+      "Direct code handoff with Tailwind/CSS variable parity",
     ],
-    tags: ["Figma", "Design Tokens", "Storybook", "Framer", "WCAG"],
+    techStack: ["Figma", "Framer", "Storybook", "Adobe CC", "Tokens Studio"],
+    metrics: "42% average increase in user onboarding completion",
+  },
+  {
+    id: "ai-automation",
+    icon: Bot,
+    accentColor: "#F59E0B",
+    badgeBg: "rgba(245, 158, 11, 0.12)",
+    badgeBorder: "rgba(245, 158, 11, 0.25)",
+    category: "Artificial Intelligence",
+    title: "AI & Intelligent Automation",
+    tagline: "Empower your business workflows with tailored LLM pipelines and automated agents.",
+    description:
+      "Transform static software into cognitive systems. We build production Retrieval-Augmented Generation (RAG) pipelines, intelligent customer support agents, automated document extraction, and predictive analytics models.",
+    deliverables: [
+      "Custom RAG pipelines powered by Pinecone & pgvector",
+      "Fine-tuned OpenAI, Anthropic, and Llama 3 models",
+      "Autonomous workflow agents for customer operations",
+      "Intelligent OCR & structured document extraction",
+      "Enterprise guardrails, prompt sanitization & privacy compliance",
+      "Real-time semantic search and recommendation engines",
+    ],
+    techStack: ["OpenAI", "LangChain", "Llama 3", "Pinecone", "Python", "FastAPI"],
+    metrics: "60%+ reduction in repetitive operational workflows",
+  },
+  {
+    id: "devops-security",
+    icon: ShieldCheck,
+    accentColor: "#EC4899",
+    badgeBg: "rgba(236, 72, 153, 0.12)",
+    badgeBorder: "rgba(236, 72, 153, 0.25)",
+    category: "DevOps & Security",
+    title: "Cloud Infrastructure & Cybersecurity",
+    tagline: "Bulletproof serverless and containerized infrastructure with continuous security.",
+    description:
+      "We build immutable, automated cloud platforms on AWS, GCP, and Azure. With automated Terraform configurations, vulnerability scanning, WAF protection, and 24/7 telemetry monitoring, your infrastructure remains resilient under pressure.",
+    deliverables: [
+      "Terraform Infrastructure as Code (IaC) architectures",
+      "Zero-downtime blue/green CI/CD automation pipelines",
+      "Automated WAF, DDoS mitigation & TLS 1.3 encryption",
+      "Comprehensive Datadog, Prometheus & Grafana observability",
+      "Quarterly penetration testing & vulnerability patch routines",
+      "Multi-region failover & automated snapshot backups",
+    ],
+    techStack: ["AWS", "Google Cloud", "Terraform", "GitHub Actions", "Datadog", "Cloudflare"],
+    metrics: "Zero security incidents across all client deployments",
   },
 ];
 
-const iconBoxStyles: Record<string, React.CSSProperties> = {
-  blue: {
-    background: "linear-gradient(135deg, rgba(37,99,235,0.2), rgba(99,102,241,0.1))",
-    border: "1px solid rgba(37,99,235,0.25)",
-  },
-  violet: {
-    background: "linear-gradient(135deg, rgba(139,92,246,0.2), rgba(99,102,241,0.1))",
-    border: "1px solid rgba(139,92,246,0.25)",
-  },
-  green: {
-    background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(6,182,212,0.08))",
-    border: "1px solid rgba(34,197,94,0.2)",
-  },
-  indigo: {
-    background: "linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1))",
-    border: "1px solid rgba(99,102,241,0.25)",
-  },
-};
-
-const iconColors = { blue: "#60A5FA", violet: "#A78BFA", green: "#86EFAC", indigo: "#818CF8" };
-
 export function CoreServices() {
-  const [active, setActive] = useState<(typeof services)[0] | null>(null);
+  const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
 
   return (
-    <>
-      <section id="services" className="section" style={{ background: "#070B19" }}>
-        <div className="container">
+    <section
+      id="services"
+      style={{
+        background: "#080812",
+        padding: "6rem 0",
+        position: "relative",
+        borderTop: "1px solid rgba(255,255,255,0.05)",
+      }}
+    >
+      {/* Background glow effects */}
+      <div
+        style={{
+          position: "absolute",
+          top: "10%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "800px",
+          height: "400px",
+          background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
 
-          {/* Section header */}
-          <div className="section-header center">
-            <div className="eyebrow">Services We Deliver</div>
-            <h2 className="h2" style={{ marginBottom: "1.25rem", maxWidth: 600, margin: "0 auto 1.25rem" }}>
-              Everything You Need to{" "}
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #60A5FA, #818CF8)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Ship & Scale
-              </span>
-            </h2>
-            <p className="body-lg" style={{ maxWidth: 560, margin: "0 auto" }}>
-              Four focused engineering disciplines. Deep expertise in each. No fragmented generalists — just senior specialists who own the outcome.
-            </p>
+      <div className="container-page" style={{ position: "relative" }}>
+        {/* Section Header */}
+        <div style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto 4rem" }}>
+          <div className="eyebrow">
+            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            OUR SPECIALIZATIONS
           </div>
-
-          {/* 2×2 grid */}
-          <div
+          <h2
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(2, 1fr)",
-              gap: "1.25rem",
+              fontSize: "clamp(2rem, 4vw, 3rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.03em",
+              lineHeight: 1.15,
+              color: "#FFFFFF",
+              marginBottom: "1.25rem",
             }}
           >
-            {services.map((svc) => {
-              const Icon = svc.icon;
-              return (
-                <div
-                  key={svc.id}
-                  style={{
-                    background: "#0D1630",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 20,
-                    padding: "2.25rem",
-                    display: "flex",
-                    flexDirection: "column",
-                    transition: "all 0.25s ease",
-                    cursor: "default",
-                    boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLDivElement;
-                    el.style.borderColor = `${svc.badgeColor}40`;
-                    el.style.boxShadow = `0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px ${svc.badgeColor}20`;
-                    el.style.transform = "translateY(-4px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLDivElement;
-                    el.style.borderColor = "rgba(255,255,255,0.07)";
-                    el.style.boxShadow = "0 4px 24px rgba(0,0,0,0.3)";
-                    el.style.transform = "translateY(0)";
-                  }}
-                >
-                  {/* Icon + badge row */}
-                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "1.5rem" }}>
+            Engineering What’s Next in{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Digital Technology
+            </span>
+          </h2>
+          <p
+            style={{
+              fontSize: "1.0625rem",
+              color: "rgba(255,255,255,0.6)",
+              lineHeight: 1.7,
+            }}
+          >
+            From modern web applications and native mobile software to scalable cloud SaaS and AI
+            integrations, our dedicated engineering teams turn complex technical hurdles into competitive
+            market advantages.
+          </p>
+        </div>
+
+        {/* 6 Services Grid (3x2 on desktop, 1 on mobile) */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gap: "1.75rem",
+          }}
+        >
+          {SERVICES.map((svc) => {
+            const IconComponent = svc.icon;
+            return (
+              <div
+                key={svc.id}
+                style={{
+                  background: "#0D0D1A",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  borderRadius: 20,
+                  padding: "2.25rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  transition: "all 0.25s ease",
+                  cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+                onClick={() => setSelectedService(svc)}
+                onMouseEnter={(e) => {
+                  const target = e.currentTarget as HTMLDivElement;
+                  target.style.borderColor = svc.accentColor;
+                  target.style.transform = "translateY(-4px)";
+                  target.style.boxShadow = `0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px ${svc.accentColor}33`;
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.currentTarget as HTMLDivElement;
+                  target.style.borderColor = "rgba(255,255,255,0.06)";
+                  target.style.transform = "translateY(0)";
+                  target.style.boxShadow = "none";
+                }}
+              >
+                {/* Top: Icon + Category pill */}
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "1.5rem",
+                    }}
+                  >
                     <div
                       style={{
                         width: 52,
                         height: 52,
                         borderRadius: 14,
+                        background: svc.badgeBg,
+                        border: `1px solid ${svc.badgeBorder}`,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        ...iconBoxStyles[svc.iconBox],
                       }}
                     >
-                      <Icon size={24} style={{ color: iconColors[svc.iconBox as keyof typeof iconColors] }} />
+                      <IconComponent size={26} style={{ color: svc.accentColor }} />
                     </div>
                     <span
                       style={{
@@ -198,265 +304,328 @@ export function CoreServices() {
                         borderRadius: 100,
                         fontSize: "0.6875rem",
                         fontWeight: 700,
-                        letterSpacing: "0.06em",
                         textTransform: "uppercase",
-                        color: svc.badgeColor,
-                        background: svc.badgeBg,
-                        border: `1px solid ${svc.badgeBorder}`,
+                        letterSpacing: "0.08em",
+                        background: "rgba(255,255,255,0.04)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        color: "rgba(255,255,255,0.6)",
                       }}
                     >
-                      {svc.id === "web" ? "Most Popular" : svc.id === "saas" ? "Enterprise" : svc.id === "design" ? "Strategy" : ""}
+                      {svc.category}
                     </span>
                   </div>
 
-                  {/* Title & stack */}
-                  <h3 className="h4" style={{ marginBottom: 6, fontSize: "1.1875rem" }}>
+                  {/* Title & Tagline */}
+                  <h3
+                    style={{
+                      fontSize: "1.375rem",
+                      fontWeight: 700,
+                      color: "#FFFFFF",
+                      letterSpacing: "-0.02em",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
                     {svc.title}
                   </h3>
                   <p
                     style={{
-                      fontSize: "0.75rem",
-                      color: "#64748B",
-                      fontFamily: "ui-monospace, monospace",
-                      marginBottom: "1rem",
+                      fontSize: "0.9375rem",
+                      color: "rgba(255,255,255,0.55)",
+                      lineHeight: 1.6,
+                      marginBottom: "1.5rem",
                     }}
                   >
-                    {svc.short}
-                  </p>
-                  <p className="body" style={{ marginBottom: "1.5rem", flexGrow: 1, fontSize: "0.9rem" }}>
-                    {svc.description}
+                    {svc.tagline}
                   </p>
 
-                  {/* Feature list — 3 items visible */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: "1.5rem" }}>
-                    {svc.features.slice(0, 3).map((feat) => (
-                      <div key={feat} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                        <CheckCircle2 size={14} style={{ color: svc.badgeColor, flexShrink: 0, marginTop: 2 }} />
-                        <span style={{ fontSize: "0.875rem", color: "#94A3B8" }}>{feat}</span>
+                  {/* Bullet Highlights */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.75rem" }}>
+                    {svc.deliverables.slice(0, 3).map((item, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
+                        <CheckCircle2
+                          size={15}
+                          style={{ color: svc.accentColor, flexShrink: 0, marginTop: 3 }}
+                        />
+                        <span style={{ fontSize: "0.845rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.4 }}>
+                          {item}
+                        </span>
                       </div>
                     ))}
                   </div>
+                </div>
 
-                  {/* Tags */}
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: "1.5rem" }}>
-                    {svc.tags.map((t) => (
-                      <span key={t} className="chip">{t}</span>
+                {/* Bottom: Tech Tags & Explore Link */}
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 6,
+                      marginBottom: "1.5rem",
+                      paddingTop: "1rem",
+                      borderTop: "1px solid rgba(255,255,255,0.05)",
+                    }}
+                  >
+                    {svc.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        style={{
+                          fontSize: "0.75rem",
+                          fontWeight: 600,
+                          padding: "3px 8px",
+                          borderRadius: 6,
+                          background: "rgba(255,255,255,0.03)",
+                          border: "1px solid rgba(255,255,255,0.06)",
+                          color: "rgba(255,255,255,0.45)",
+                          fontFamily: "ui-monospace, monospace",
+                        }}
+                      >
+                        {tech}
+                      </span>
                     ))}
                   </div>
 
-                  {/* CTA */}
-                  <button
-                    type="button"
-                    onClick={() => setActive(svc)}
+                  <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 6,
-                      padding: "10px 20px",
-                      borderRadius: 10,
-                      background: svc.badgeBg,
-                      border: `1px solid ${svc.badgeBorder}`,
-                      color: svc.badgeColor,
+                      justifyContent: "space-between",
                       fontSize: "0.875rem",
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      width: "100%",
-                      justifyContent: "center",
-                      transition: "all 0.2s",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = `${svc.badgeColor}20`;
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.background = svc.badgeBg;
+                      fontWeight: 600,
+                      color: svc.accentColor,
                     }}
                   >
-                    Explore Architecture
-                    <ArrowRight size={14} />
-                  </button>
+                    <span>View Full Scope</span>
+                    <ArrowRight size={16} />
+                  </div>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Bottom CTA strip */}
-          <div
-            style={{
-              marginTop: "2.5rem",
-              padding: "2rem 2.5rem",
-              borderRadius: 16,
-              background: "linear-gradient(135deg, rgba(37,99,235,0.08), rgba(99,102,241,0.06))",
-              border: "1px solid rgba(37,99,235,0.15)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 24,
-              flexWrap: "wrap",
-            }}
-          >
-            <div>
-              <h4 style={{ fontSize: "1.0625rem", fontWeight: 700, color: "#F8FAFC", marginBottom: 4 }}>
-                Not sure which service fits your project?
-              </h4>
-              <p style={{ fontSize: "0.875rem", color: "#64748B" }}>
-                Book a free 30-min discovery call — we'll map the right solution for you.
-              </p>
-            </div>
-            <a
-              href="#contact"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 8,
-                padding: "0.875rem 2rem",
-                borderRadius: 12,
-                background: "linear-gradient(135deg, #2563EB, #1D4ED8)",
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: "0.9375rem",
-                textDecoration: "none",
-                boxShadow: "0 4px 14px rgba(37,99,235,0.4)",
-                transition: "all 0.2s",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 6px 20px rgba(37,99,235,0.55)";
-                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 4px 14px rgba(37,99,235,0.4)";
-                (e.currentTarget as HTMLAnchorElement).style.transform = "translateY(0)";
-              }}
-            >
-              Schedule Free Consultation
-              <ArrowRight size={15} />
-            </a>
-          </div>
-
+              </div>
+            );
+          })}
         </div>
-      </section>
 
-      {/* Modal */}
-      {active && (
+        {/* Bottom Banner to Estimator */}
+        <div
+          style={{
+            marginTop: "3.5rem",
+            background: "linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(13,13,26,0.9) 100%)",
+            border: "1px solid rgba(6,182,212,0.2)",
+            borderRadius: 20,
+            padding: "2rem 2.5rem",
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "1.5rem",
+          }}
+        >
+          <div>
+            <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff", marginBottom: 4 }}>
+              Need a personalized technical roadmap or custom architecture?
+            </div>
+            <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.5)" }}>
+              Use our interactive estimator to calculate development timeline and transparent pricing instantly.
+            </p>
+          </div>
+          <a href="#estimator" className="btn-brand">
+            Try Cost Estimator
+            <ArrowRight size={16} />
+          </a>
+        </div>
+      </div>
+
+      {/* Detail Modal */}
+      {selectedService && (
         <div
           style={{
             position: "fixed",
             inset: 0,
             zIndex: 100,
+            background: "rgba(0,0,0,0.85)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: 24,
-            background: "rgba(0,0,0,0.8)",
-            backdropFilter: "blur(16px)",
+            padding: "1.5rem",
           }}
-          onClick={() => setActive(null)}
+          onClick={() => setSelectedService(null)}
         >
           <div
             style={{
-              width: "100%",
-              maxWidth: 580,
-              background: "#0D1630",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: "#0D0D1A",
+              border: `1px solid ${selectedService.accentColor}55`,
               borderRadius: 24,
-              padding: "2.5rem",
+              maxWidth: "680px",
+              width: "100%",
               maxHeight: "90vh",
               overflowY: "auto",
-              boxShadow: "0 30px 80px rgba(0,0,0,0.7)",
+              padding: "2.5rem",
               position: "relative",
+              boxShadow: "0 25px 60px rgba(0,0,0,0.8)",
             }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
             <button
-              onClick={() => setActive(null)}
+              onClick={() => setSelectedService(null)}
               style={{
                 position: "absolute",
-                top: 20,
-                right: 20,
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                top: "1.5rem",
+                right: "1.5rem",
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                color: "#fff",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 cursor: "pointer",
-                color: "#64748B",
               }}
             >
-              <X size={16} />
+              <X size={18} />
             </button>
 
+            {/* Header info */}
+            <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: "1.25rem" }}>
+              <div
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: 14,
+                  background: selectedService.badgeBg,
+                  border: `1px solid ${selectedService.badgeBorder}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <selectedService.icon size={26} style={{ color: selectedService.accentColor }} />
+              </div>
+              <div>
+                <span
+                  style={{
+                    fontSize: "0.6875rem",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    color: selectedService.accentColor,
+                  }}
+                >
+                  {selectedService.category}
+                </span>
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#fff" }}>
+                  {selectedService.title}
+                </h3>
+              </div>
+            </div>
+
+            <p style={{ fontSize: "0.9375rem", color: "rgba(255,255,255,0.7)", lineHeight: 1.7, marginBottom: "1.75rem" }}>
+              {selectedService.description}
+            </p>
+
+            {/* Deliverables checklist */}
+            <div style={{ marginBottom: "2rem" }}>
+              <div
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "1rem",
+                }}
+              >
+                Core Engineering Deliverables
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" }}>
+                {selectedService.deliverables.map((item, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: 12,
+                      padding: "10px 14px",
+                      borderRadius: 10,
+                      background: "rgba(255,255,255,0.02)",
+                      border: "1px solid rgba(255,255,255,0.05)",
+                    }}
+                  >
+                    <CheckCircle2 size={16} style={{ color: selectedService.accentColor, flexShrink: 0, marginTop: 2 }} />
+                    <span style={{ fontSize: "0.875rem", color: "#F1F5F9" }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tech Stack */}
+            <div style={{ marginBottom: "2rem" }}>
+              <div
+                style={{
+                  fontSize: "0.8125rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
+                  color: "rgba(255,255,255,0.4)",
+                  marginBottom: "0.75rem",
+                }}
+              >
+                Technologies Used
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {selectedService.techStack.map((tech) => (
+                  <span
+                    key={tech}
+                    style={{
+                      padding: "6px 14px",
+                      borderRadius: 8,
+                      background: "rgba(255,255,255,0.04)",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      fontSize: "0.8125rem",
+                      fontWeight: 600,
+                      color: "#CBD5E1",
+                      fontFamily: "ui-monospace, monospace",
+                    }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Key Metric & Modal CTA */}
             <div
               style={{
-                padding: "4px 12px",
-                borderRadius: 100,
-                display: "inline-flex",
-                fontSize: "0.6875rem",
-                fontWeight: 800,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: active.badgeColor,
-                background: active.badgeBg,
-                border: `1px solid ${active.badgeBorder}`,
-                marginBottom: "1.25rem",
-              }}
-            >
-              Architecture breakdown
-            </div>
-
-            <h3 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#F8FAFC", marginBottom: 8, letterSpacing: "-0.025em" }}>
-              {active.title}
-            </h3>
-            <p style={{ fontSize: "0.75rem", color: "#64748B", fontFamily: "ui-monospace, monospace", marginBottom: "1.25rem" }}>
-              {active.short}
-            </p>
-            <p style={{ fontSize: "0.9375rem", color: "#94A3B8", lineHeight: 1.75, marginBottom: "1.75rem" }}>
-              {active.description}
-            </p>
-
-            <p style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569", marginBottom: "1rem" }}>
-              Full capability set
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: "1.75rem" }}>
-              {active.features.map((feat) => (
-                <div key={feat} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <CheckCircle2 size={15} style={{ color: active.badgeColor, flexShrink: 0 }} />
-                  <span style={{ fontSize: "0.9375rem", color: "#CBD5E1" }}>{feat}</span>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: "1.75rem" }}>
-              {active.tags.map((t) => <span key={t} className="chip">{t}</span>)}
-            </div>
-
-            <a
-              href="#contact"
-              onClick={() => setActive(null)}
-              style={{
                 display: "flex",
+                flexWrap: "wrap",
                 alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                padding: "1rem",
-                borderRadius: 12,
-                background: "linear-gradient(135deg, #2563EB, #1D4ED8)",
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: "1rem",
-                textDecoration: "none",
-                boxShadow: "0 4px 14px rgba(37,99,235,0.4)",
+                justifyContent: "space-between",
+                gap: 16,
+                paddingTop: "1.5rem",
+                borderTop: "1px solid rgba(255,255,255,0.08)",
               }}
             >
-              Start this project now
-              <ArrowRight size={16} />
-            </a>
+              <div>
+                <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)" }}>Standard Benchmark</div>
+                <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#fff" }}>
+                  {selectedService.metrics}
+                </div>
+              </div>
+              <a
+                href="#contact"
+                className="btn-brand"
+                onClick={() => setSelectedService(null)}
+              >
+                Request Consultation
+                <ArrowRight size={16} />
+              </a>
+            </div>
           </div>
         </div>
       )}
-    </>
+    </section>
   );
 }
