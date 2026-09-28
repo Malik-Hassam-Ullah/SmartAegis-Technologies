@@ -2,7 +2,6 @@ import React from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
-import { TrustMetrics } from "@/components/sections/TrustMetrics";
 import { CoreServices } from "@/components/sections/CoreServices";
 import { Estimator } from "@/components/sections/Estimator";
 import { Process } from "@/components/sections/Process";
@@ -17,7 +16,6 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <TrustMetrics />
         <CoreServices />
         <Estimator />
         <Process />

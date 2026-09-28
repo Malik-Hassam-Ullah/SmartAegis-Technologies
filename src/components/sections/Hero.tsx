@@ -3,13 +3,6 @@
 import React from "react";
 import { ArrowRight, Play, Star, Shield, Zap, TrendingUp, Sparkles } from "lucide-react";
 
-const TECH_BADGES = [
-  "React", "Next.js", "TypeScript", "Node.js", "Flutter", "React Native",
-  "Python", "Go", "PostgreSQL", "MongoDB", "AWS", "Docker",
-  "Kubernetes", "Figma", "GraphQL", "Redis", "Stripe", "Vercel",
-  "React", "Next.js", "TypeScript", "Node.js", "Flutter", "React Native",
-];
-
 const AVATARS = [
   { initials: "AK", bg: "#E10600" },
   { initials: "SR", bg: "#8B5CF6" },
@@ -24,7 +17,7 @@ export function Hero() {
       style={{
         position: "relative",
         paddingTop: "5.5rem",
-        paddingBottom: "0",
+        paddingBottom: "4rem",
         background: "linear-gradient(180deg, #0B0B0E 0%, #111116 100%)",
         overflow: "hidden",
         minHeight: "100vh",
@@ -305,38 +298,6 @@ export function Hero() {
                 <div style={{ fontSize: "0.5625rem", color: "#FF4D49", fontWeight: 600 }}>OWASP Hardened · SOC2 Ready</div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Tech stack ticker ── */}
-      <div
-        style={{
-          borderTop: "1px solid rgba(255,255,255,0.05)",
-          background: "rgba(255,255,255,0.01)",
-          padding: "16px 0",
-          position: "relative",
-          zIndex: 2,
-        }}
-      >
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: "0.625rem",
-            fontWeight: 800,
-            textTransform: "uppercase",
-            letterSpacing: "0.15em",
-            color: "rgba(255,255,255,0.25)",
-            marginBottom: 12,
-          }}
-        >
-          Technologies We Master
-        </p>
-        <div className="marquee-wrap">
-          <div className="marquee-inner">
-            {TECH_BADGES.map((t, i) => (
-              <span key={i} className="chip">{t}</span>
-            ))}
           </div>
         </div>
       </div>
