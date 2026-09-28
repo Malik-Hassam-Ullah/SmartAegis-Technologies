@@ -1,272 +1,182 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import confetti from "canvas-confetti";
-import { 
-  Calculator, 
-  Check, 
-  ArrowRight, 
-  Sparkles, 
-  Clock, 
-  Layers, 
-  ShieldCheck, 
-  DollarSign, 
-  CheckCircle2,
-  Calendar,
-  Send
-} from "lucide-react";
+import { ArrowRight, Minus, Plus } from "lucide-react";
 
-interface PlatformOption {
-  id: string;
-  name: string;
-  desc: string;
-  basePrice: number;
-  baseWeeks: number;
-}
+const platforms = [
+  { id: "web", label: "Web app", base: 9000, weeks: 4 },
+  { id: "mobile", label: "Mobile app (iOS + Android)", base: 12000, weeks: 6 },
+  { id: "saas", label: "Full-stack SaaS", base: 16000, weeks: 8 },
+  { id: "enterprise", label: "Enterprise software", base: 24000, weeks: 10 },
+];
 
-interface FeatureOption {
-  id: string;
-  name: string;
-  price: number;
-  weeks: number;
-  category: string;
-}
+const features = [
+  { id: "auth", label: "Auth & RBAC", price: 1800, weeks: 0.5 },
+  { id: "payments", label: "Payments & subscriptions", price: 2400, weeks: 1 },
+  { id: "chat", label: "Real-time chat & notifications", price: 2800, weeks: 1 },
+  { id: "admin", label: "Admin dashboard & analytics", price: 3200, weeks: 1.5 },
+  { id: "ai", label: "AI / LLM integration", price: 4800, weeks: 2 },
+  { id: "cloud", label: "Multi-region cloud infra", price: 2900, weeks: 1 },
+];
 
-interface TimelineOption {
-  id: string;
-  name: string;
-  multiplier: number;
-  weeksDesc: string;
-}
+const timelines = [
+  { id: "fast", label: "Fast-track", note: "4 – 6 weeks", multiplier: 1.25 },
+  { id: "standard", label: "Standard", note: "8 – 12 weeks", multiplier: 1.0 },
+  { id: "continuous", label: "Continuous", note: "Ongoing squad", multiplier: 0.9 },
+];
 
 export function Estimator() {
-  const platforms: PlatformOption[] = [
-    { id: "web", name: "Web Application", desc: "Next.js / React edge-rendered web platform", basePrice: 8500, baseWeeks: 4 },
-    { id: "mobile", name: "Mobile App (iOS & Android)", desc: "Flutter / React Native cross-platform app", basePrice: 11500, baseWeeks: 5 },
-    { id: "saas", name: "Full-Stack SaaS Platform", desc: "Multi-tenant backend, dashboard & billing", basePrice: 15000, baseWeeks: 6 },
-    { id: "enterprise", name: "Enterprise Custom Software", desc: "High-throughput microservices & ERP", basePrice: 22000, baseWeeks: 8 },
-  ];
-
-  const features: FeatureOption[] = [
-    { id: "auth", name: "Military-Grade Auth & RBAC", price: 1800, weeks: 1, category: "Security" },
-    { id: "payments", name: "Stripe / Subscriptions / Invoicing", price: 2400, weeks: 1, category: "Billing" },
-    { id: "chat", name: "Real-Time Chat & Notifications", price: 2800, weeks: 1.5, category: "Interactive" },
-    { id: "admin", name: "Executive Analytics & Admin Portal", price: 3200, weeks: 1.5, category: "Management" },
-    { id: "ai", name: "Custom AI / LLM & RAG Integration", price: 4500, weeks: 2, category: "AI & ML" },
-    { id: "cloud", name: "Multi-Region Cloud (AWS / Docker)", price: 2900, weeks: 1.5, category: "DevOps" },
-  ];
-
-  const timelines: TimelineOption[] = [
-    { id: "fast", name: "Fast-Track Sprint", multiplier: 1.25, weeksDesc: "Dedicated dual-engineer squad (4-6 weeks)" },
-    { id: "standard", name: "Standard Agile Flow", multiplier: 1.0, weeksDesc: "Standard agile bi-weekly delivery (8-12 weeks)" },
-    { id: "enterprise", name: "Continuous Dedicated Team", multiplier: 0.95, weeksDesc: "Ongoing monthly squad allocation" },
-  ];
-
-  const [selectedPlatform, setSelectedPlatform] = useState<string>("web");
-  const [selectedFeatures, setSelectedFeatures] = useState<string[]>(["auth", "admin"]);
-  const [selectedTimeline, setSelectedTimeline] = useState<string>("standard");
-
-  // Lead capture state
-  const [clientName, setClientName] = useState("");
-  const [clientEmail, setClientEmail] = useState("");
-  const [clientBrief, setClientBrief] = useState("");
+  const [platform, setPlatform] = useState("web");
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [timeline, setTimeline] = useState("standard");
+  const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", note: "" });
 
   const toggleFeature = (id: string) => {
-    if (selectedFeatures.includes(id)) {
-      setSelectedFeatures(selectedFeatures.filter((f) => f !== id));
-    } else {
-      setSelectedFeatures([...selectedFeatures, id]);
-    }
+    setSelectedFeatures((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
   };
 
-  // Dynamic calculations
-  const calculation = useMemo(() => {
-    const platform = platforms.find((p) => p.id === selectedPlatform) || platforms[0];
-    const timeline = timelines.find((t) => t.id === selectedTimeline) || timelines[1];
-    
-    let featurePrice = 0;
+  const estimate = useMemo(() => {
+    const p = platforms.find((pl) => pl.id === platform) || platforms[0];
+    const t = timelines.find((tl) => tl.id === timeline) || timelines[1];
+    let featureTotal = 0;
     let featureWeeks = 0;
-
-    selectedFeatures.forEach((fId) => {
-      const feat = features.find((f) => f.id === fId);
-      if (feat) {
-        featurePrice += feat.price;
-        featureWeeks += feat.weeks;
-      }
+    selectedFeatures.forEach((fid) => {
+      const f = features.find((fe) => fe.id === fid);
+      if (f) { featureTotal += f.price; featureWeeks += f.weeks; }
     });
-
-    const rawTotal = (platform.basePrice + featurePrice) * timeline.multiplier;
-    const lowEstimate = Math.round(rawTotal * 0.9);
-    const highEstimate = Math.round(rawTotal * 1.15);
-    const totalWeeks = Math.max(4, Math.round((platform.baseWeeks + featureWeeks) * (timeline.id === "fast" ? 0.75 : 1)));
-
-    return {
-      lowEstimate,
-      highEstimate,
-      totalWeeks,
-      platformName: platform.name,
-    };
-  }, [selectedPlatform, selectedFeatures, selectedTimeline]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!clientName || !clientEmail) return;
-
-    // Trigger celebration confetti
-    try {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ["#00D2FF", "#1D4ED8", "#6366F1", "#10B981"],
-      });
-    } catch (err) {
-      // fallback if canvas not available
-    }
-
-    setSubmitted(true);
-  };
+    const raw = (p.base + featureTotal) * t.multiplier;
+    const lo = Math.round(raw * 0.9 / 500) * 500;
+    const hi = Math.round(raw * 1.15 / 500) * 500;
+    const wks = Math.round((p.weeks + featureWeeks) * (timeline === "fast" ? 0.75 : 1));
+    return { lo, hi, weeks: wks };
+  }, [platform, selectedFeatures, timeline]);
 
   return (
-    <section id="estimator" className="relative py-24 bg-[#060a18] border-y border-cyan-500/15 overflow-hidden">
-      {/* Background glow accents */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[140px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <section id="estimator" className="section-padding" style={{ borderTop: "1px solid var(--border-subtle)", background: "var(--surface-1)" }}>
+      <div className="container-lg">
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-cyan-500/30 text-xs font-mono text-cyan-400">
-            <Calculator className="w-3.5 h-3.5" />
-            <span>TRANSPARENT PROJECT ESTIMATION ENGINE</span>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "start", gap: 32, marginBottom: 56, flexWrap: "wrap" as const }}>
+          <div>
+            <p className="label" style={{ marginBottom: 16, display: "inline-flex" }}>Project estimator</p>
+            <h2 className="display-lg" style={{ color: "var(--text-primary)", marginBottom: 16 }}>
+              What will it cost to build?
+            </h2>
+            <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.7, maxWidth: 480 }}>
+              Configure your project and get a transparent scope estimate — no sales call required.
+            </p>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
-            Configure Your Scope &amp; <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Instant Estimate</span>
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
-            Gain full budget and timeline clarity before kicking off discovery. No hidden markups, zero vendor lock-in.
-          </p>
+          <div
+            style={{
+              background: "var(--canvas)",
+              border: "1px solid var(--border-default)",
+              borderRadius: 16,
+              padding: "28px 32px",
+              minWidth: 260,
+              textAlign: "center",
+            }}
+          >
+            <div style={{ fontSize: 11, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.08em", fontFamily: "ui-monospace, monospace" }}>
+              Estimated budget
+            </div>
+            <div
+              style={{
+                fontSize: "clamp(1.75rem, 3vw, 2.5rem)",
+                fontWeight: 800,
+                color: "#22d3ee",
+                letterSpacing: "-0.04em",
+                fontFamily: "ui-monospace, monospace",
+                lineHeight: 1,
+                marginBottom: 8,
+              }}
+            >
+              ${estimate.lo.toLocaleString()} – ${estimate.hi.toLocaleString()}
+            </div>
+            <div style={{ fontSize: 13, color: "var(--text-muted)", borderTop: "1px solid var(--border-subtle)", paddingTop: 12, marginTop: 8 }}>
+              ~{estimate.weeks} weeks to ship
+            </div>
+          </div>
         </div>
 
-        {/* Main Grid: Configurator (Left 7 Cols) + Live Output & Lead Capture (Right 5 Cols) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Left Column: Interactive Stepper Configurator */}
-          <div className="lg:col-span-7 space-y-8 p-6 sm:p-8 rounded-3xl bg-[#090f23]/90 border border-slate-800 shadow-2xl backdrop-blur-xl">
-            
-            {/* Step 1: Select Platform */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-cyan-400 tracking-wider font-bold">
-                  STEP 01 // PLATFORM ARCHITECTURE
-                </span>
-                <span className="text-[11px] text-slate-500">Select target runtime</span>
-              </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {platforms.map((plat) => {
-                  const isSelected = selectedPlatform === plat.id;
+          {/* Left: Config */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+
+            {/* Step 1: Platform */}
+            <div>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 14 }}>
+                01 — Platform
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                {platforms.map((p) => {
+                  const isActive = platform === p.id;
                   return (
                     <button
-                      key={plat.id}
+                      key={p.id}
                       type="button"
-                      onClick={() => setSelectedPlatform(plat.id)}
-                      className={`text-left p-4 rounded-2xl border transition-all duration-200 relative ${
-                        isSelected
-                          ? "bg-cyan-950/40 border-cyan-400 shadow-[0_0_20px_rgba(0,210,255,0.15)]"
-                          : "bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900"
-                      }`}
+                      onClick={() => setPlatform(p.id)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "12px 16px",
+                        borderRadius: 10,
+                        border: `1px solid ${isActive ? "rgba(34,211,238,0.4)" : "var(--border-subtle)"}`,
+                        background: isActive ? "rgba(34,211,238,0.06)" : "var(--canvas)",
+                        cursor: "pointer",
+                        textAlign: "left",
+                        transition: "all 0.15s",
+                      }}
                     >
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className={`text-sm font-bold ${isSelected ? "text-cyan-300" : "text-white"}`}>
-                          {plat.name}
-                        </span>
-                        {isSelected && <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />}
-                      </div>
-                      <p className="text-xs text-slate-400 leading-snug">{plat.desc}</p>
+                      <span style={{ fontSize: 14, fontWeight: 500, color: isActive ? "#22d3ee" : "var(--text-secondary)" }}>
+                        {p.label}
+                      </span>
+                      {isActive && (
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <circle cx="7" cy="7" r="6" stroke="rgba(34,211,238,0.4)" />
+                          <path d="M4 7l2 2 4-4" stroke="#22d3ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      )}
                     </button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Step 2: Select Features & Scale */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-cyan-400 tracking-wider font-bold">
-                  STEP 02 // MODULES &amp; ADVANCED CAPABILITIES
-                </span>
-                <span className="text-[11px] text-slate-500">Pick required modules</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {features.map((feat) => {
-                  const isChecked = selectedFeatures.includes(feat.id);
-                  return (
-                    <button
-                      key={feat.id}
-                      type="button"
-                      onClick={() => toggleFeature(feat.id)}
-                      className={`text-left p-3.5 rounded-xl border flex items-center justify-between transition-all duration-200 ${
-                        isChecked
-                          ? "bg-blue-950/40 border-cyan-400/80 shadow-[0_0_15px_rgba(0,210,255,0.1)]"
-                          : "bg-slate-900/60 border-slate-800 hover:border-slate-700"
-                      }`}
-                    >
-                      <div className="space-y-0.5">
-                        <div className="flex items-center gap-2">
-                          <span className={`text-xs font-semibold ${isChecked ? "text-white" : "text-slate-300"}`}>
-                            {feat.name}
-                          </span>
-                        </div>
-                        <span className="text-[10px] font-mono text-slate-500 uppercase">
-                          {feat.category}
-                        </span>
-                      </div>
-                      <div
-                        className={`w-5 h-5 rounded-md flex items-center justify-center border transition ${
-                          isChecked ? "bg-cyan-500 border-cyan-400 text-slate-950" : "border-slate-700"
-                        }`}
-                      >
-                        {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Step 3: Estimated Timeline */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-cyan-400 tracking-wider font-bold">
-                  STEP 03 // TIMELINE &amp; SPRINT PACING
-                </span>
-                <span className="text-[11px] text-slate-500">Velocity schedule</span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Step 2: Timeline */}
+            <div>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 14 }}>
+                02 — Timeline
+              </p>
+              <div style={{ display: "flex", gap: 8 }}>
                 {timelines.map((tl) => {
-                  const isSelected = selectedTimeline === tl.id;
+                  const isActive = timeline === tl.id;
                   return (
                     <button
                       key={tl.id}
                       type="button"
-                      onClick={() => setSelectedTimeline(tl.id)}
-                      className={`text-left p-3.5 rounded-xl border transition-all ${
-                        isSelected
-                          ? "bg-indigo-950/50 border-indigo-400 text-white"
-                          : "bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700"
-                      }`}
+                      onClick={() => setTimeline(tl.id)}
+                      style={{
+                        flex: 1,
+                        padding: "12px 10px",
+                        borderRadius: 10,
+                        border: `1px solid ${isActive ? "rgba(34,211,238,0.4)" : "var(--border-subtle)"}`,
+                        background: isActive ? "rgba(34,211,238,0.06)" : "var(--canvas)",
+                        cursor: "pointer",
+                        textAlign: "center",
+                      }}
                     >
-                      <span className={`block text-xs font-bold mb-1 ${isSelected ? "text-cyan-300" : "text-slate-200"}`}>
-                        {tl.name}
-                      </span>
-                      <span className="text-[10px] text-slate-400 leading-tight block">
-                        {tl.weeksDesc}
-                      </span>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: isActive ? "#22d3ee" : "var(--text-secondary)", marginBottom: 3 }}>
+                        {tl.label}
+                      </div>
+                      <div style={{ fontSize: 11, color: "var(--text-muted)", fontFamily: "ui-monospace, monospace" }}>
+                        {tl.note}
+                      </div>
                     </button>
                   );
                 })}
@@ -275,118 +185,139 @@ export function Estimator() {
 
           </div>
 
-          {/* Right Column: Live Output Ticker & Claim Scope Lead Form */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Live Pricing Ticker Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-gradient-to-b from-[#0e1630] to-[#090f22] border border-cyan-500/30 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl pointer-events-none"></div>
-
-              <span className="text-[11px] font-mono text-cyan-400 uppercase tracking-widest block mb-1">
-                DYNAMIC SCOPE CALCULATION
-              </span>
-              <h3 className="text-xl font-bold text-white mb-4">
-                Estimated Project Investment
-              </h3>
-
-              {/* Price Range */}
-              <div className="p-5 rounded-2xl bg-slate-950/80 border border-slate-800/90 mb-5">
-                <div className="text-[11px] text-slate-400 font-mono mb-1">Estimated Budget Range</div>
-                <div className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-300 font-mono">
-                  ${calculation.lowEstimate.toLocaleString()} – ${calculation.highEstimate.toLocaleString()}
-                </div>
-                <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-800 text-xs text-slate-400">
-                  <Clock className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Target Sprint Duration: <strong className="text-white font-mono">{calculation.totalWeeks} Weeks</strong></span>
-                </div>
-              </div>
-
-              {/* Selected Scope Badges */}
-              <div className="space-y-2 mb-6">
-                <span className="text-[11px] uppercase font-mono text-slate-400 block">
-                  Configured Architecture Specs:
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  <span className="px-2.5 py-1 rounded-md bg-cyan-950/60 border border-cyan-500/30 text-[11px] text-cyan-300 font-medium">
-                    {calculation.platformName}
-                  </span>
-                  {selectedFeatures.map((fId) => {
-                    const feat = features.find((f) => f.id === fId);
-                    return feat ? (
-                      <span key={fId} className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-[10px] text-slate-300">
-                        {feat.name}
+          {/* Right: Feature toggles + CTA */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+            <div>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 14 }}>
+                03 — Add features
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {features.map((f) => {
+                  const checked = selectedFeatures.includes(f.id);
+                  return (
+                    <button
+                      key={f.id}
+                      type="button"
+                      onClick={() => toggleFeature(f.id)}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: "11px 14px",
+                        borderRadius: 10,
+                        border: `1px solid ${checked ? "rgba(34,211,238,0.3)" : "var(--border-subtle)"}`,
+                        background: checked ? "rgba(34,211,238,0.05)" : "var(--canvas)",
+                        cursor: "pointer",
+                        textAlign: "left",
+                        transition: "all 0.15s",
+                      }}
+                    >
+                      <span style={{ fontSize: 13, color: checked ? "var(--text-primary)" : "var(--text-secondary)" }}>
+                        {f.label}
                       </span>
-                    ) : null;
-                  })}
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <span style={{ fontSize: 12, color: "var(--text-muted)", fontFamily: "ui-monospace, monospace" }}>
+                          +${f.price.toLocaleString()}
+                        </span>
+                        <div
+                          style={{
+                            width: 20,
+                            height: 20,
+                            borderRadius: 6,
+                            border: `1px solid ${checked ? "#22d3ee" : "var(--border-default)"}`,
+                            background: checked ? "#22d3ee" : "transparent",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            flexShrink: 0,
+                          }}
+                        >
+                          {checked && (
+                            <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                              <path d="M2 5l2.5 2.5 4-4" stroke="#03070f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Claim form */}
+            {!submitted ? (
+              <div style={{ padding: 24, borderRadius: 14, border: "1px solid var(--border-subtle)", background: "var(--canvas)" }}>
+                <p style={{ fontSize: 13, fontWeight: 700, color: "var(--text-primary)", marginBottom: 16 }}>
+                  Lock in this estimate — get a free architecture review
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <input
+                    type="text"
+                    placeholder="Your name"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: 8,
+                      border: "1px solid var(--border-subtle)",
+                      background: "var(--surface-1)",
+                      color: "var(--text-primary)",
+                      fontSize: 13,
+                      outline: "none",
+                      boxSizing: "border-box" as const,
+                    }}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Work email"
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "10px 14px",
+                      borderRadius: 8,
+                      border: "1px solid var(--border-subtle)",
+                      background: "var(--surface-1)",
+                      color: "var(--text-primary)",
+                      fontSize: 13,
+                      outline: "none",
+                      boxSizing: "border-box" as const,
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => form.name && form.email && setSubmitted(true)}
+                    className="btn-primary"
+                    style={{ justifyContent: "center" }}
+                  >
+                    Claim this scope
+                    <ArrowRight size={14} />
+                  </button>
                 </div>
               </div>
+            ) : (
+              <div
+                style={{
+                  padding: 24,
+                  borderRadius: 14,
+                  border: "1px solid rgba(52,211,153,0.3)",
+                  background: "rgba(52,211,153,0.04)",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontSize: 22, marginBottom: 10 }}>✓</div>
+                <p style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)", marginBottom: 6 }}>
+                  Scope received — thank you, {form.name}.
+                </p>
+                <p style={{ fontSize: 13, color: "var(--text-muted)" }}>
+                  We'll reach out to {form.email} within 4 hours with your architecture brief.
+                </p>
+              </div>
+            )}
 
-              {/* Lead Claim Form */}
-              {!submitted ? (
-                <form onSubmit={handleSubmit} className="space-y-3 pt-3 border-t border-slate-800">
-                  <span className="text-xs font-bold text-white block">
-                    Lock In This Scope &amp; Schedule Discovery Call
-                  </span>
-
-                  <div>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Your Name / Organization"
-                      value={clientName}
-                      onChange={(e) => setClientName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 transition"
-                    />
-                  </div>
-
-                  <div>
-                    <input
-                      type="email"
-                      required
-                      placeholder="Work Email (e.g. alex@company.com)"
-                      value={clientEmail}
-                      onChange={(e) => setClientEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 transition"
-                    />
-                  </div>
-
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="Optional Brief (e.g., target launch in Q3)"
-                      value={clientBrief}
-                      onChange={(e) => setClientBrief(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-white placeholder-slate-500 text-xs focus:outline-none focus:border-cyan-400 transition"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 text-white text-xs font-bold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>Claim Scope &amp; Book Free Consultation</span>
-                  </button>
-
-                  <p className="text-[10px] text-slate-500 text-center pt-1">
-                    🔒 Guaranteed Non-Disclosure Agreement (NDA) &amp; Zero Spam Policy
-                  </p>
-                </form>
-              ) : (
-                <div className="p-5 rounded-2xl bg-emerald-950/50 border border-emerald-500/40 text-center space-y-2.5 animate-fadeIn">
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 mx-auto">
-                    <Check className="w-6 h-6 stroke-[3]" />
-                  </div>
-                  <h4 className="text-sm font-bold text-white">Scope &amp; Estimation Reserved!</h4>
-                  <p className="text-xs text-slate-300">
-                    Thank you, <strong className="text-white">{clientName}</strong>. Our Lead Solutions Architect will reach out to <strong className="text-cyan-400">{clientEmail}</strong> within 4 hours with your detailed scope breakdown.
-                  </p>
-                </div>
-              )}
-
-            </div>
           </div>
-
         </div>
 
       </div>
