@@ -1,305 +1,367 @@
 @import "tailwindcss";
 
+
+/* ============================================================
+   SMARTAEGIS PREMIUM AGENCY — DESIGN SYSTEM
+   Inspired by: Salient, Divi, Astra Pro + Linear + Stripe
+   ============================================================ */
+
 @layer base {
   :root {
-    --canvas: #03070f;
-    --surface-1: #080d17;
-    --surface-2: #0d1424;
-    --surface-3: #111827;
-    --border-subtle: rgba(255, 255, 255, 0.06);
-    --border-default: rgba(255, 255, 255, 0.1);
-    --border-strong: rgba(255, 255, 255, 0.18);
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-muted: #475569;
-    --accent-cyan: #22d3ee;
-    --accent-blue: #3b82f6;
-    --accent-indigo: #818cf8;
-    --accent-glow: rgba(34, 211, 238, 0.12);
+    /* Canvas & Surfaces */
+    --canvas:      #070B19;
+    --surface-0:   #060A17;
+    --surface-1:   #0C1226;
+    --surface-2:   #111827;
+    --surface-3:   #1a2235;
+    --surface-card: #0D1630;
+
+    /* Borders */
+    --border-xs:   rgba(255,255,255,0.04);
+    --border-sm:   rgba(255,255,255,0.07);
+    --border-md:   rgba(255,255,255,0.12);
+    --border-lg:   rgba(255,255,255,0.2);
+
+    /* Text */
+    --text-100: #F8FAFC;
+    --text-200: #E2E8F0;
+    --text-300: #CBD5E1;
+    --text-400: #94A3B8;
+    --text-500: #64748B;
+    --text-600: #475569;
+
+    /* Brand — Blue-first (no flat cyan) */
+    --blue-400:  #60A5FA;
+    --blue-500:  #3B82F6;
+    --blue-600:  #2563EB;
+    --blue-700:  #1D4ED8;
+    --indigo-400: #818CF8;
+    --indigo-500: #6366F1;
+    --violet-500: #8B5CF6;
+
+    /* Semantic */
+    --accent:       #2563EB;
+    --accent-hover: #1D4ED8;
+    --accent-light: rgba(37,99,235,0.12);
+    --accent-glow:  rgba(37,99,235,0.25);
+    --green-500:  #22C55E;
+    --green-glow: rgba(34,197,94,0.2);
   }
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* ============================================================
+   BASE RESET & TYPOGRAPHY
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
   background: var(--canvas);
-  color: var(--text-primary);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  color: var(--text-200);
+  font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
-/* ==================
-   SCROLLBAR
-================== */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(34,211,238,0.3); }
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--canvas); }
+::-webkit-scrollbar-thumb { background: rgba(37,99,235,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(37,99,235,0.5); }
 
-/* ==================
+::selection { background: rgba(37,99,235,0.25); color: #fff; }
+
+a { text-decoration: none; color: inherit; }
+
+/* ============================================================
    TYPOGRAPHY SCALE
-================== */
-.display-xl {
-  font-size: clamp(2.75rem, 6vw, 5rem);
+   ============================================================ */
+.h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4.25rem);
   font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -0.035em;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--text-100);
 }
-
-.display-lg {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 700;
-  line-height: 1.1;
+.h2 {
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.12;
   letter-spacing: -0.03em;
+  color: var(--text-100);
 }
-
-.display-md {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+.h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.025em;
+  color: var(--text-100);
+}
+.h4 { font-size: 1.125rem; font-weight: 700; color: var(--text-100); line-height: 1.3; }
+.body-lg { font-size: 1.0625rem; line-height: 1.75; color: var(--text-400); }
+.body { font-size: 0.9375rem; line-height: 1.7; color: var(--text-400); }
+.caption { font-size: 0.8125rem; line-height: 1.5; color: var(--text-500); }
+.mono { font-family: "SF Mono", ui-monospace, "Fira Code", monospace; }
+
+/* Gradient headings */
+.text-gradient {
+  background: linear-gradient(135deg, #FFFFFF 30%, #93C5FD 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.text-gradient-blue {
+  background: linear-gradient(135deg, #60A5FA 0%, #818CF8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* ==================
-   GRADIENT TEXT
-================== */
-.gradient-text {
-  background: linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.gradient-text-cyan {
-  background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ==================
-   CARDS
-================== */
-.card {
-  background: var(--surface-1);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  border-color: var(--border-default);
-}
-
-.card-hover:hover {
-  border-color: rgba(34, 211, 238, 0.25);
-  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.08), 0 20px 40px -12px rgba(0, 0, 0, 0.5);
-}
-
-/* ==================
-   BUTTONS
-================== */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: #22d3ee;
-  color: #03070f;
-  font-weight: 700;
-  font-size: 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.btn-primary:hover {
-  background: #67e8f9;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(34, 211, 238, 0.25);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: transparent;
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border-default);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.btn-secondary:hover {
-  background: rgba(255,255,255,0.04);
-  border-color: var(--border-strong);
-}
-
-/* ==================
-   LABELS / BADGES
-================== */
-.label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.2);
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #67e8f9;
-}
-
-.tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-family: "SF Mono", ui-monospace, monospace;
-}
-
-/* ==================
-   LAYOUT UTILITIES
-================== */
-.section-padding {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-}
-
-@media (min-width: 768px) {
-  .section-padding {
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-  }
-}
-
-.container-lg {
-  max-width: 1200px;
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.container {
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 1.5rem;
+}
+@media (min-width: 1024px) { .container { padding: 0 2.5rem; } }
+
+.section { padding: 6rem 0; }
+@media (min-width: 768px) { .section { padding: 7.5rem 0; } }
+
+/* Responsive grid helpers */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+@media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
 }
 
-@media (min-width: 1024px) {
-  .container-lg {
-    padding: 0 40px;
-  }
+/* ============================================================
+   BUTTONS — WordPress premium style
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 0.9375rem; border-radius: 12px;
+  cursor: pointer; border: none; transition: all 0.2s ease;
+  padding: 0.8rem 1.75rem; white-space: nowrap; text-decoration: none;
+  position: relative; overflow: hidden;
 }
 
-/* ==================
-   MARQUEE
-================== */
-@keyframes marquee-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+/* Primary — Royal Blue with real shadow & glow */
+.btn-primary {
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(37,99,235,0.4), 0 1px 0 rgba(255,255,255,0.1) inset;
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+  box-shadow: 0 6px 20px rgba(37,99,235,0.55), 0 1px 0 rgba(255,255,255,0.15) inset;
+  transform: translateY(-1px);
+}
+.btn-primary:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(37,99,235,0.4); }
+
+/* Secondary — frosted dark glass */
+.btn-secondary {
+  background: rgba(255,255,255,0.04);
+  color: var(--text-200);
+  border: 1px solid rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
+  color: var(--text-100);
 }
 
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee-left 40s linear infinite;
+/* Ghost blue */
+.btn-ghost-blue {
+  background: rgba(37,99,235,0.08);
+  color: var(--blue-400);
+  border: 1px solid rgba(37,99,235,0.2);
+}
+.btn-ghost-blue:hover { background: rgba(37,99,235,0.15); border-color: rgba(37,99,235,0.4); }
+
+.btn-lg { padding: 1rem 2.25rem; font-size: 1rem; border-radius: 14px; }
+.btn-sm { padding: 0.55rem 1.25rem; font-size: 0.8125rem; border-radius: 8px; }
+
+/* ============================================================
+   BADGE / LABELS
+   ============================================================ */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 100px; font-size: 0.75rem;
+  font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+}
+.badge-blue {
+  background: rgba(37,99,235,0.12); border: 1px solid rgba(37,99,235,0.25); color: #93C5FD;
+}
+.badge-green {
+  background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); color: #86EFAC;
+}
+.badge-violet {
+  background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25); color: #C4B5FD;
+}
+.badge-white {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text-200);
 }
 
-.marquee-track:hover {
-  animation-play-state: paused;
+.chip {
+  display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 600; font-family: ui-monospace, monospace;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  color: var(--text-400);
 }
 
-/* ==================
-   SECTION DIVIDER
-================== */
-.divider {
-  border: none;
-  border-top: 1px solid var(--border-subtle);
-  margin: 0;
+/* ============================================================
+   CARDS — Rich, structured, premium
+   ============================================================ */
+.card {
+  background: var(--surface-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.card:hover {
+  border-color: rgba(37,99,235,0.3);
+  box-shadow: 0 20px 60px -10px rgba(0,0,0,0.6), 0 0 0 1px rgba(37,99,235,0.1);
+  transform: translateY(-3px);
+}
+.card-flat {
+  background: var(--surface-card);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
 }
 
-/* ==================
-   PULSING DOT
-================== */
-.pulse-dot {
-  position: relative;
-  display: inline-flex;
+/* ============================================================
+   ICON BOX
+   ============================================================ */
+.icon-box {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.icon-box-blue { background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(99,102,241,0.1)); border: 1px solid rgba(37,99,235,0.2); }
+.icon-box-violet { background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(99,102,241,0.1)); border: 1px solid rgba(139,92,246,0.2); }
+.icon-box-green { background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(6,182,212,0.08)); border: 1px solid rgba(34,197,94,0.2); }
+.icon-box-indigo { background: linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1)); border: 1px solid rgba(99,102,241,0.2); }
+
+/* ============================================================
+   SECTION HEADERS
+   ============================================================ */
+.section-header { margin-bottom: 3.5rem; }
+.section-header.center { text-align: center; }
+.section-header .eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--blue-400); margin-bottom: 1rem;
+}
+.section-header .eyebrow::before, .section-header .eyebrow::after {
+  content: ''; display: block; width: 24px; height: 2px;
+  background: var(--blue-500); border-radius: 2px;
 }
 
-.pulse-dot::before {
+/* ============================================================
+   BACKGROUNDS & DECORATIONS
+   ============================================================ */
+
+/* Subtle mesh gradient overlay */
+.mesh-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 40%, rgba(37,99,235,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 80% 20%, rgba(99,102,241,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 60% 80%, rgba(139,92,246,0.05) 0%, transparent 50%);
+}
+
+/* Diagonal grid lines */
+.grid-lines {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.grid-lines::after {
   content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  background: rgba(52, 211, 153, 0.4);
-  animation: pulse-scale 2s ease-in-out infinite;
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, var(--canvas));
 }
 
-@keyframes pulse-scale {
-  0%, 100% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.6); opacity: 0; }
+/* Top glow stripe */
+.top-glow {
+  position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  width: 60%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.6), transparent);
 }
 
-/* ==================
-   GRID NOISE BG
-================== */
-.bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.marquee-inner { display: flex; width: max-content; animation: marquee 35s linear infinite; }
+.marquee-inner:hover { animation-play-state: paused; }
+.marquee-wrap {
+  overflow: hidden; position: relative;
+  mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
+  -webkit-mask: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);
 }
 
-/* ==================
-   GLOW ORBS
-================== */
-.orb-cyan {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%);
-  pointer-events: none;
-  filter: blur(1px);
+/* ============================================================
+   PULSE ANIMATIONS
+   ============================================================ */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2); opacity: 0; }
+}
+.pulse-green { position: relative; display: inline-flex; }
+.pulse-green::after {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  background: var(--green-500); opacity: 0.4;
+  animation: pulse-ring 1.8s ease-out infinite;
 }
 
-.orb-blue {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
-  pointer-events: none;
-  filter: blur(1px);
+/* ============================================================
+   FLOATING WIDGETS (Hero mockup)
+   ============================================================ */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes float-y-r {
+  0%, 100% { transform: translateY(0px) rotate(3deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
+}
+.float-anim { animation: float-y 4s ease-in-out infinite; }
+.float-anim-r { animation: float-y-r 5s ease-in-out infinite; }
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); }
+
+/* Section separator with gradient line */
+.sep {
+  display: block; height: 1px; width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(37,99,235,0.4) 50%, transparent);
 }
 
-/* ==================
-   ACCORDION ANIMATION
-================== */
-.accordion-content {
-  overflow: hidden;
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+/* ============================================================
+   STEP NUMBER
+   ============================================================ */
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8125rem; font-weight: 800; font-family: ui-monospace, monospace;
+  background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(99,102,241,0.15));
+  border: 1px solid rgba(37,99,235,0.25); color: var(--blue-400);
 }
 
-/* ==================
-   SELECTION
-================== */
-::selection {
-  background: rgba(34, 211, 238, 0.2);
-  color: #e2e8f0;
-}
+/* ============================================================
+   FOCUS & MISC
+   ============================================================ */
+:focus-visible { outline: 2px solid rgba(37,99,235,0.5); outline-offset: 3px; border-radius: 6px; }
 
-/* ==================
-   FOCUS OUTLINE
-================== */
-:focus-visible {
-  outline: 2px solid rgba(34, 211, 238, 0.5);
-  outline-offset: 2px;
-  border-radius: 4px;
-}
+
+

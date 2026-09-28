@@ -1,136 +1,189 @@
 "use client";
 
 import React from "react";
-import { Check, X } from "lucide-react";
+import { CheckCircle2, XCircle, Sparkles, Lock, MessageSquare, Wrench, DollarSign, Globe } from "lucide-react";
 
 const pillars = [
-  {
-    title: "You own everything.",
-    desc: "All code, IP, architecture decisions, and database schemas are transferred to your organisation on day one. No licensing fees, no vendor lock-in, no strings attached.",
-  },
-  {
-    title: "Direct engineer access.",
-    desc: "No account managers filtering requirements. You communicate directly with the senior engineer leading your project, in Slack, with access to your Jira board.",
-  },
-  {
-    title: "Security isn't an add-on.",
-    desc: "OWASP hardening, automated SAST/DAST scanning, and dependency vulnerability monitoring run on every CI build — not billed as a separate engagement.",
-  },
-  {
-    title: "Transparent, predictable pricing.",
-    desc: "Fixed-scope milestones with clear deliverables. No surprise invoices, no change-order theatre. You see the cost of every scope change before it's approved.",
-  },
-  {
-    title: "30-day zero-bug warranty.",
-    desc: "Every production deployment comes with a 30-day warranty. We fix any regression caused by our code at no additional cost.",
-  },
-  {
-    title: "Built on open-source fundamentals.",
-    desc: "Next.js, PostgreSQL, Docker, Kubernetes — tools that any competent engineer can maintain. We deliberately avoid proprietary platforms that create dependency.",
-  },
+  { icon: Lock, iconColor: "#60A5FA", iconBg: "rgba(37,99,235,0.12)", title: "100% IP Ownership", desc: "All code, assets, and infrastructure are yours from day one. No licensing, no lock-in, no vendor dependency." },
+  { icon: MessageSquare, iconColor: "#A78BFA", iconBg: "rgba(139,92,246,0.12)", title: "Direct Engineer Access", desc: "You communicate directly with the senior engineer building your product. No account managers in the middle." },
+  { icon: Wrench, iconColor: "#86EFAC", iconBg: "rgba(34,197,94,0.1)", title: "Security Is Standard", desc: "OWASP hardening, SAST/DAST scanning, and dependency monitoring run on every single CI build — at no extra cost." },
+  { icon: DollarSign, iconColor: "#FCA5A5", iconBg: "rgba(239,68,68,0.1)", title: "Transparent Pricing", desc: "Fixed-scope milestones. No surprise invoices, no change-order theatre. Every scope change is costed before approval." },
+  { icon: Sparkles, iconColor: "#FCD34D", iconBg: "rgba(245,158,11,0.1)", title: "30-Day Bug Warranty", desc: "Every delivery comes with a 30-day zero-bug warranty. We fix any regression from our code at absolutely no cost." },
+  { icon: Globe, iconColor: "#67E8F9", iconBg: "rgba(6,182,212,0.1)", title: "Open-Source Foundation", desc: "Next.js, PostgreSQL, Docker, Kubernetes — standards-based tools any engineer can maintain. No proprietary trap." },
 ];
 
 const comparison = [
-  { feature: "IP & code ownership", aegis: "100% yours, day one", others: "Held behind contract clauses" },
-  { feature: "Security audits", aegis: "Automated in every CI run", others: "Billed separately, done manually" },
-  { feature: "Communication", aegis: "Direct access to senior engineers", others: "Relayed through non-technical PMs" },
-  { feature: "Post-launch warranty", aegis: "30-day zero-bug guarantee", others: "Billed at hourly rate" },
-  { feature: "Infrastructure", aegis: "Open-source, standards-based", others: "Proprietary lock-in platforms" },
+  { feature: "Source code & IP ownership", aegis: "100% transferred, day one", others: "Retained in vendor contract clauses" },
+  { feature: "Security auditing", aegis: "Automated in every CI pipeline", others: "Separate billable engagement" },
+  { feature: "Communication model", aegis: "Direct Slack with lead engineer", others: "Filtered through non-technical PM" },
+  { feature: "Post-launch support", aegis: "30-day zero-bug warranty", others: "Charged at hourly support rate" },
+  { feature: "Infrastructure platform", aegis: "Open-source, zero lock-in", others: "Proprietary platforms, exit costs" },
+  { feature: "Pricing transparency", aegis: "Fixed-scope, no surprises", others: "Time & materials, change orders" },
 ];
 
 export function WhyAegis() {
   return (
-    <section id="why-aegis" className="section-padding" style={{ borderTop: "1px solid var(--border-subtle)" }}>
-      <div className="container-lg">
+    <section id="why-aegis" className="section" style={{ background: "#070B19", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="container">
 
         {/* Header */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
-          <div>
-            <p className="label" style={{ marginBottom: 20, display: "inline-flex" }}>Why SmartAegis</p>
-            <h2 className="display-lg" style={{ color: "var(--text-primary)", marginBottom: 20 }}>
-              We work like your best internal team.
-            </h2>
-            <p style={{ fontSize: 15, color: "var(--text-secondary)", lineHeight: 1.7 }}>
-              In Greek mythology, the Aegis was the ultimate shield — impenetrable, forged by master craftsmen. We apply the same standard to every codebase we touch.
-            </p>
-          </div>
+        <div className="section-header center">
+          <div className="eyebrow">Why SmartAegis</div>
+          <h2 className="h2" style={{ marginBottom: "1.25rem", maxWidth: 580, margin: "0 auto 1.25rem" }}>
+            We Work Like Your Best{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #60A5FA, #818CF8)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Internal Team.
+            </span>
+          </h2>
+          <p className="body-lg" style={{ maxWidth: 520, margin: "0 auto" }}>
+            The Aegis was the ultimate shield in Greek mythology — forged by master craftsmen, impenetrable in battle. We apply the same standard to every product we build.
+          </p>
+        </div>
 
-          {/* 6 pillar mini-grid */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-            {pillars.map((p) => (
-              <div key={p.title}>
+        {/* 3×2 pillar grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "1.25rem",
+            marginBottom: "4rem",
+          }}
+        >
+          {pillars.map((p) => {
+            const Icon = p.icon;
+            return (
+              <div
+                key={p.title}
+                style={{
+                  background: "#0D1630",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  borderRadius: 16,
+                  padding: "1.75rem",
+                  transition: "all 0.25s",
+                  cursor: "default",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = `${p.iconColor}30`;
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "0 16px 40px rgba(0,0,0,0.4)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.07)";
+                  (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                }}
+              >
                 <div
                   style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 8,
-                    background: "rgba(34,211,238,0.08)",
-                    border: "1px solid rgba(34,211,238,0.15)",
+                    width: 44,
+                    height: 44,
+                    borderRadius: 12,
+                    background: p.iconBg,
+                    border: `1px solid ${p.iconColor}25`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginBottom: 12,
+                    marginBottom: "1.25rem",
                   }}
                 >
-                  <Check size={14} style={{ color: "#22d3ee" }} />
+                  <Icon size={20} style={{ color: p.iconColor }} />
                 </div>
-                <h4 style={{ fontSize: 14, fontWeight: 700, color: "var(--text-primary)", marginBottom: 8 }}>{p.title}</h4>
-                <p style={{ fontSize: 13, color: "var(--text-muted)", lineHeight: 1.6 }}>{p.desc}</p>
+                <h4 style={{ fontSize: "1rem", fontWeight: 700, color: "#F8FAFC", marginBottom: 8 }}>{p.title}</h4>
+                <p style={{ fontSize: "0.875rem", color: "#64748B", lineHeight: 1.65 }}>{p.desc}</p>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
 
         {/* Comparison table */}
-        <div style={{ marginTop: 72 }}>
+        <div>
           <p
             style={{
-              fontSize: 11,
-              fontWeight: 700,
+              textAlign: "center",
+              fontSize: "0.6875rem",
+              fontWeight: 800,
               textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              color: "var(--text-muted)",
-              marginBottom: 24,
+              letterSpacing: "0.12em",
+              color: "#475569",
+              marginBottom: "1.5rem",
             }}
           >
-            How we compare
+            How We Compare
           </p>
 
-          <div style={{ border: "1px solid var(--border-subtle)", borderRadius: 16, overflow: "hidden" }}>
-            {/* Table header */}
+          <div
+            style={{
+              background: "#0D1630",
+              border: "1px solid rgba(255,255,255,0.07)",
+              borderRadius: 20,
+              overflow: "hidden",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+            }}
+          >
+            {/* Table head */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "2fr 1.5fr 1.5fr",
-                padding: "14px 24px",
-                borderBottom: "1px solid var(--border-subtle)",
+                padding: "1rem 1.75rem",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
                 background: "rgba(255,255,255,0.02)",
               }}
             >
-              <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Feature</span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: "#22d3ee", textTransform: "uppercase", letterSpacing: "0.08em" }}>SmartAegis</span>
-              <span style={{ fontSize: 12, fontWeight: 700, color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Typical agency</span>
+              <span style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569" }}>Feature</span>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div
+                  style={{
+                    width: 20,
+                    height: 20,
+                    borderRadius: 5,
+                    background: "linear-gradient(135deg, #2563EB, #4F46E5)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L20 6V12C20 16.4 16.9 20.5 12 22C7.1 20.5 4 16.4 4 12V6L12 2Z" fill="white"/>
+                  </svg>
+                </div>
+                <span style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#60A5FA" }}>SmartAegis</span>
+              </div>
+              <span style={{ fontSize: "0.6875rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#475569" }}>Typical Agency</span>
             </div>
 
+            {/* Rows */}
             {comparison.map((row, i) => (
               <div
                 key={row.feature}
                 style={{
                   display: "grid",
                   gridTemplateColumns: "2fr 1.5fr 1.5fr",
-                  padding: "16px 24px",
-                  borderBottom: i < comparison.length - 1 ? "1px solid var(--border-subtle)" : "none",
+                  padding: "1rem 1.75rem",
+                  borderBottom: i < comparison.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
                   alignItems: "center",
+                  transition: "background 0.15s",
                 }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.02)")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLDivElement).style.background = "transparent")}
               >
-                <span style={{ fontSize: 14, color: "var(--text-secondary)" }}>{row.feature}</span>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <Check size={14} style={{ color: "#34d399", flexShrink: 0 }} />
-                  <span style={{ fontSize: 13, color: "var(--text-primary)", fontWeight: 500 }}>{row.aegis}</span>
+                <span style={{ fontSize: "0.9375rem", color: "#94A3B8", paddingRight: 16 }}>{row.feature}</span>
+
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                  <CheckCircle2 size={15} style={{ color: "#22C55E", flexShrink: 0, marginTop: 2 }} />
+                  <span style={{ fontSize: "0.875rem", color: "#E2E8F0", fontWeight: 500 }}>{row.aegis}</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <X size={14} style={{ color: "rgba(239,68,68,0.6)", flexShrink: 0 }} />
-                  <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{row.others}</span>
+
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+                  <XCircle size={15} style={{ color: "rgba(239,68,68,0.5)", flexShrink: 0, marginTop: 2 }} />
+                  <span style={{ fontSize: "0.875rem", color: "#475569" }}>{row.others}</span>
                 </div>
               </div>
             ))}
