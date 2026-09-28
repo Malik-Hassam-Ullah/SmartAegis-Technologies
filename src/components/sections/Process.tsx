@@ -34,7 +34,7 @@ const PHASES: Phase[] = [
     subtitle: "Define specifications, database schemas & compliance constraints before coding.",
     duration: "Week 1–2",
     icon: Compass,
-    accentColor: "#06B6D4",
+    accentColor: "#E10600",
     description:
       "We unpack your business goals, user personas, third-party API dependencies, and infrastructure scaling criteria. Senior Solution Architects deliver an immutable technical specification document.",
     deliverables: [
@@ -53,7 +53,7 @@ const PHASES: Phase[] = [
     subtitle: "Create high-fidelity interactive prototypes in Figma mapped 1:1 to code tokens.",
     duration: "Week 2–3",
     icon: Layout,
-    accentColor: "#8B5CF6",
+    accentColor: "#FF4D49",
     description:
       "We design an atomic design system with comprehensive component libraries, dark/light states, and responsive breakpoints. Stakeholders experience clickable prototypes before frontend build begins.",
     deliverables: [
@@ -72,7 +72,7 @@ const PHASES: Phase[] = [
     subtitle: "Bi-weekly sprint demos with working software deployed to staging environments.",
     duration: "Week 3–8+",
     icon: Code2,
-    accentColor: "#3B82F6",
+    accentColor: "#E10600",
     description:
       "Senior full-stack engineers execute clean, modular code with strict typing. Every commit triggers automated build pipelines, unit tests, and continuous preview deployments for your team to test.",
     deliverables: [
@@ -91,7 +91,7 @@ const PHASES: Phase[] = [
     subtitle: "Rigorous automated & manual verification to ensure defense-grade reliability.",
     duration: "Week 7–9",
     icon: ShieldAlert,
-    accentColor: "#10B981",
+    accentColor: "#FFC533",
     description:
       "Before production cutover, our dedicated QA engineers stress-test every workflow. We execute cross-browser matrix audits, simulated DDoS load tests, SQL/XSS vulnerability assessments, and edge cases.",
     deliverables: [
@@ -101,7 +101,7 @@ const PHASES: Phase[] = [
       "Cross-device mobile testing across 30+ physical device configurations",
       "Core Web Vitals & Lighthouse score optimization (95+ score target)",
     ],
-    keyOutcome: "A bulletproof, production-verified system with 99.98% guaranteed uptime readiness.",
+    keyOutcome: "A bulletproof, production-verified system with 99.99% guaranteed uptime readiness.",
   },
   {
     id: "deployment",
@@ -110,7 +110,7 @@ const PHASES: Phase[] = [
     subtitle: "Seamless DNS cutover, real-time observability & guaranteed post-launch warranty.",
     duration: "Ongoing",
     icon: Rocket,
-    accentColor: "#F59E0B",
+    accentColor: "#E10600",
     description:
       "We orchestrate smooth blue/green DNS cutover with zero downtime. Post-launch, we activate Datadog/Grafana telemetry, 60-day complimentary bug warranty, and flexible maintenance agreements.",
     deliverables: [
@@ -133,17 +133,17 @@ export function Process() {
     <section
       id="process"
       style={{
-        background: "#080812",
+        background: "#0B0B0E",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="container-page">
         {/* Section Header */}
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
           <div className="eyebrow">
-            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            <Sparkles size={14} style={{ color: "#E10600" }} />
             ENGINEERING WORKFLOW
           </div>
           <h2
@@ -159,7 +159,7 @@ export function Process() {
             How We Deliver{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -190,7 +190,7 @@ export function Process() {
                 key={p.id}
                 onClick={() => setActivePhaseIndex(idx)}
                 style={{
-                  background: isCurrent ? "#0D0D1A" : "rgba(255,255,255,0.02)",
+                  background: isCurrent ? "#111116" : "rgba(255,255,255,0.02)",
                   border: isCurrent ? `1px solid ${p.accentColor}` : "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 14,
                   padding: "1rem 1.25rem",
@@ -237,11 +237,11 @@ export function Process() {
         {/* Active Phase Deep Dive Card */}
         <div
           style={{
-            background: "#0D0D1A",
-            border: `1px solid ${activePhase.accentColor}33`,
+            background: "#111116",
+            border: `1px solid ${activePhase.accentColor}44`,
             borderRadius: 24,
             padding: "2.5rem",
-            boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 40px ${activePhase.accentColor}10`,
+            boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 40px ${activePhase.accentColor}12`,
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
             gap: "2.5rem",
@@ -298,7 +298,7 @@ export function Process() {
                 marginBottom: "1.5rem",
               }}
             >
-              <div style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#22D3EE", marginBottom: 3 }}>
+              <div style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#FF4D49", marginBottom: 3 }}>
                 Guaranteed Milestone Outcome
               </div>
               <div style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.85)", fontWeight: 500 }}>
@@ -315,7 +315,7 @@ export function Process() {
           {/* Right Deliverables List */}
           <div
             style={{
-              background: "#080812",
+              background: "#08080C",
               border: "1px solid rgba(255,255,255,0.06)",
               borderRadius: 18,
               padding: "2rem",

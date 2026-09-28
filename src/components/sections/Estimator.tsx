@@ -8,7 +8,6 @@ import {
   Clock,
   Sparkles,
   Shield,
-  Send,
   Zap,
   Check,
 } from "lucide-react";
@@ -144,17 +143,17 @@ export function Estimator() {
     <section
       id="estimator"
       style={{
-        background: "#06060E",
+        background: "#08080C",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="container-page">
         {/* Section Header */}
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
           <div className="eyebrow">
-            <Calculator size={14} style={{ color: "#06B6D4" }} />
+            <Calculator size={14} style={{ color: "#E10600" }} />
             TRANSPARENT PRICING CALCULATOR
           </div>
           <h2
@@ -170,7 +169,7 @@ export function Estimator() {
             Estimate Your Project Cost &{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -199,13 +198,13 @@ export function Estimator() {
             {/* Step 1: Platform Selection */}
             <div
               style={{
-                background: "#0D0D1A",
+                background: "#111116",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 20,
                 padding: "1.75rem",
               }}
             >
-              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "0.8125rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#FF4D49", marginBottom: "1rem" }}>
                 1. Select Application Type
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "0.75rem" }}>
@@ -218,8 +217,8 @@ export function Estimator() {
                       style={{
                         padding: "1rem 1.25rem",
                         borderRadius: 14,
-                        border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
-                        background: isSelected ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.06)",
+                        background: isSelected ? "rgba(225,6,0,0.08)" : "rgba(255,255,255,0.02)",
                         cursor: "pointer",
                         transition: "all 0.2s ease",
                       }}
@@ -233,7 +232,7 @@ export function Estimator() {
                             width: 18,
                             height: 18,
                             borderRadius: "50%",
-                            border: isSelected ? "5px solid #06B6D4" : "2px solid rgba(255,255,255,0.2)",
+                            border: isSelected ? "5px solid #E10600" : "2px solid rgba(255,255,255,0.2)",
                             background: isSelected ? "#fff" : "transparent",
                           }}
                         />
@@ -250,13 +249,13 @@ export function Estimator() {
             {/* Step 2: Design Level */}
             <div
               style={{
-                background: "#0D0D1A",
+                background: "#111116",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 20,
                 padding: "1.75rem",
               }}
             >
-              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "0.8125rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#FF4D49", marginBottom: "1rem" }}>
                 2. Design & UX Architecture
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
@@ -269,8 +268,8 @@ export function Estimator() {
                       style={{
                         padding: "1rem",
                         borderRadius: 12,
-                        border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
-                        background: isSelected ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.06)",
+                        background: isSelected ? "rgba(225,6,0,0.08)" : "rgba(255,255,255,0.02)",
                         cursor: "pointer",
                         transition: "all 0.2s ease",
                       }}
@@ -290,13 +289,13 @@ export function Estimator() {
             {/* Step 3: Feature Add-ons */}
             <div
               style={{
-                background: "#0D0D1A",
+                background: "#111116",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 20,
                 padding: "1.75rem",
               }}
             >
-              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "0.8125rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#FF4D49", marginBottom: "1rem" }}>
                 3. Technical Modules & Features (Select all needed)
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "0.75rem" }}>
@@ -309,8 +308,8 @@ export function Estimator() {
                       style={{
                         padding: "0.875rem 1rem",
                         borderRadius: 12,
-                        border: isChecked ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
-                        background: isChecked ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        border: isChecked ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.06)",
+                        background: isChecked ? "rgba(225,6,0,0.08)" : "rgba(255,255,255,0.02)",
                         cursor: "pointer",
                         display: "flex",
                         alignItems: "flex-start",
@@ -323,8 +322,8 @@ export function Estimator() {
                           width: 18,
                           height: 18,
                           borderRadius: 5,
-                          border: isChecked ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.2)",
-                          background: isChecked ? "#06B6D4" : "transparent",
+                          border: isChecked ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.2)",
+                          background: isChecked ? "#E10600" : "transparent",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -351,13 +350,13 @@ export function Estimator() {
             {/* Step 4: Speed / Velocity */}
             <div
               style={{
-                background: "#0D0D1A",
+                background: "#111116",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 20,
                 padding: "1.75rem",
               }}
             >
-              <div style={{ fontSize: "0.8125rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#06B6D4", marginBottom: "1rem" }}>
+              <div style={{ fontSize: "0.8125rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#FF4D49", marginBottom: "1rem" }}>
                 4. Delivery Velocity
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "0.75rem" }}>
@@ -370,8 +369,8 @@ export function Estimator() {
                       style={{
                         padding: "1rem",
                         borderRadius: 12,
-                        border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.06)",
-                        background: isSelected ? "rgba(6,182,212,0.08)" : "rgba(255,255,255,0.02)",
+                        border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.06)",
+                        background: isSelected ? "rgba(225,6,0,0.08)" : "rgba(255,255,255,0.02)",
                         cursor: "pointer",
                         transition: "all 0.2s ease",
                       }}
@@ -393,11 +392,11 @@ export function Estimator() {
           <div style={{ position: "sticky", top: "100px" }}>
             <div
               style={{
-                background: "#0D0D1A",
-                border: "1px solid rgba(6,182,212,0.3)",
+                background: "#111116",
+                border: "1px solid rgba(225,6,0,0.35)",
                 borderRadius: 24,
                 padding: "2.25rem",
-                boxShadow: "0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(6,182,212,0.08)",
+                boxShadow: "0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(225,6,0,0.12)",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -410,11 +409,11 @@ export function Estimator() {
                   gap: 6,
                   padding: "4px 12px",
                   borderRadius: 100,
-                  background: "rgba(6,182,212,0.12)",
-                  border: "1px solid rgba(6,182,212,0.25)",
+                  background: "rgba(225,6,0,0.12)",
+                  border: "1px solid rgba(225,6,0,0.3)",
                   fontSize: "0.75rem",
-                  fontWeight: 700,
-                  color: "#22D3EE",
+                  fontWeight: 800,
+                  color: "#FF4D49",
                   marginBottom: "1.25rem",
                 }}
               >
@@ -459,7 +458,7 @@ export function Estimator() {
               >
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>
-                    <Clock size={12} style={{ color: "#06B6D4" }} />
+                    <Clock size={12} style={{ color: "#E10600" }} />
                     Timeline
                   </div>
                   <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff" }}>
@@ -468,7 +467,7 @@ export function Estimator() {
                 </div>
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: 5, fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", marginBottom: 2 }}>
-                    <Shield size={12} style={{ color: "#06B6D4" }} />
+                    <Shield size={12} style={{ color: "#E10600" }} />
                     Warranty
                   </div>
                   <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff" }}>
@@ -548,12 +547,12 @@ export function Estimator() {
                   style={{
                     padding: "1.5rem",
                     borderRadius: 16,
-                    background: "rgba(16,185,129,0.1)",
-                    border: "1px solid rgba(16,185,129,0.3)",
+                    background: "rgba(225,6,0,0.1)",
+                    border: "1px solid rgba(225,6,0,0.3)",
                     textAlign: "center",
                   }}
                 >
-                  <CheckCircle2 size={36} style={{ color: "#10B981", margin: "0 auto 0.75rem" }} />
+                  <CheckCircle2 size={36} style={{ color: "#E10600", margin: "0 auto 0.75rem" }} />
                   <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#fff", marginBottom: 4 }}>
                     Estimate Locked In!
                   </div>
@@ -565,7 +564,7 @@ export function Estimator() {
                     style={{
                       background: "transparent",
                       border: "none",
-                      color: "#06B6D4",
+                      color: "#FF4D49",
                       fontSize: "0.8125rem",
                       fontWeight: 600,
                       cursor: "pointer",

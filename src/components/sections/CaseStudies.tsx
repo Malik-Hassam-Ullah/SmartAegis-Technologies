@@ -10,7 +10,6 @@ import {
   CheckCircle2,
   X,
   Sparkles,
-  Layers,
 } from "lucide-react";
 
 interface CaseStudy {
@@ -33,7 +32,7 @@ const CASE_STUDIES: CaseStudy[] = [
     id: "fintech-core",
     category: "saas",
     categoryLabel: "Fintech & SaaS",
-    categoryColor: "#06B6D4",
+    categoryColor: "#E10600",
     title: "Fintech Core — High-Frequency Trading Desk",
     client: "Global Asset Management · NYC",
     summary:
@@ -48,13 +47,13 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "Execution Uptime", value: "99.99%" },
     ],
     techStack: ["Next.js", "Go", "WebSockets", "Redis", "PostgreSQL", "AWS EKS"],
-    gradient: "linear-gradient(135deg, rgba(6,182,212,0.15), rgba(13,13,26,0.9))",
+    gradient: "linear-gradient(135deg, rgba(225,6,0,0.18), rgba(17,17,22,0.95))",
   },
   {
     id: "healthpulse",
     category: "mobile",
     categoryLabel: "Healthcare Mobile",
-    categoryColor: "#10B981",
+    categoryColor: "#FF4D49",
     title: "HealthPulse — Encrypted Telehealth Ecosystem",
     client: "Hospital Network · Texas Medical",
     summary:
@@ -69,13 +68,13 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "HIPAA Audits", value: "100% Passed" },
     ],
     techStack: ["Flutter", "WebRTC", "Firebase", "Node.js", "SQLCipher"],
-    gradient: "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(13,13,26,0.9))",
+    gradient: "linear-gradient(135deg, rgba(255,77,73,0.18), rgba(17,17,22,0.95))",
   },
   {
     id: "logistics-engine",
     category: "web",
     categoryLabel: "Supply Chain & Web",
-    categoryColor: "#3B82F6",
+    categoryColor: "#FFC533",
     title: "LogisticsEngine — Real-Time Fleet Telematics",
     client: "Logistics Enterprise · Singapore",
     summary:
@@ -90,13 +89,13 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "Map Frame Rate", value: "60 FPS" },
     ],
     techStack: ["React", "TypeScript", "Mapbox GL", "MQTT", "Python", "TimescaleDB"],
-    gradient: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(13,13,26,0.9))",
+    gradient: "linear-gradient(135deg, rgba(255,197,51,0.18), rgba(17,17,22,0.95))",
   },
   {
     id: "nexus-ai",
     category: "ai",
     categoryLabel: "AI & Automation",
-    categoryColor: "#F59E0B",
+    categoryColor: "#E10600",
     title: "NexusAI — Enterprise Customer Knowledge Agent",
     client: "B2B SaaS Provider · London",
     summary:
@@ -111,7 +110,7 @@ const CASE_STUDIES: CaseStudy[] = [
       { label: "CSAT Score", value: "4.92 / 5.0" },
     ],
     techStack: ["Claude 3", "Pinecone", "FastAPI", "Python", "LangChain", "Docker"],
-    gradient: "linear-gradient(135deg, rgba(245,158,11,0.15), rgba(13,13,26,0.9))",
+    gradient: "linear-gradient(135deg, rgba(225,6,0,0.18), rgba(17,17,22,0.95))",
   },
 ];
 
@@ -126,17 +125,17 @@ export function CaseStudies() {
     <section
       id="portfolio"
       style={{
-        background: "#06060E",
+        background: "#08080C",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="container-page">
         {/* Header */}
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3rem" }}>
           <div className="eyebrow">
-            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            <Sparkles size={14} style={{ color: "#E10600" }} />
             FEATURED CASE STUDIES
           </div>
           <h2
@@ -152,7 +151,7 @@ export function CaseStudies() {
             Engineering Impact That{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -190,14 +189,15 @@ export function CaseStudies() {
                 key={tab.id}
                 onClick={() => setFilter(tab.id as typeof filter)}
                 style={{
-                  padding: "0.5rem 1.25rem",
+                  padding: "0.5rem 1.35rem",
                   borderRadius: 100,
                   fontSize: "0.845rem",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   cursor: "pointer",
-                  background: isSelected ? "#06B6D4" : "rgba(255,255,255,0.03)",
-                  color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.6)",
-                  border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.07)",
+                  background: isSelected ? "#E10600" : "rgba(255,255,255,0.03)",
+                  color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.65)",
+                  border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.07)",
+                  boxShadow: isSelected ? "0 4px 18px rgba(225,6,0,0.4)" : "none",
                   transition: "all 0.2s ease",
                 }}
               >
@@ -219,7 +219,7 @@ export function CaseStudies() {
             <div
               key={project.id}
               style={{
-                background: "#0D0D1A",
+                background: "#111116",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 20,
                 overflow: "hidden",
@@ -233,7 +233,7 @@ export function CaseStudies() {
                 const el = e.currentTarget as HTMLDivElement;
                 el.style.borderColor = project.categoryColor;
                 el.style.transform = "translateY(-4px)";
-                el.style.boxShadow = `0 20px 45px rgba(0,0,0,0.6), 0 0 0 1px ${project.categoryColor}25`;
+                el.style.boxShadow = `0 20px 45px rgba(0,0,0,0.6), 0 0 0 1px ${project.categoryColor}30`;
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLDivElement;
@@ -260,7 +260,7 @@ export function CaseStudies() {
                     style={{
                       padding: "4px 12px",
                       borderRadius: 100,
-                      background: "rgba(0,0,0,0.4)",
+                      background: "rgba(0,0,0,0.5)",
                       border: `1px solid ${project.categoryColor}40`,
                       fontSize: "0.6875rem",
                       fontWeight: 700,
@@ -382,7 +382,7 @@ export function CaseStudies() {
         >
           <div
             style={{
-              background: "#0D0D1A",
+              background: "#111116",
               border: `1px solid ${activeModalProject.categoryColor}40`,
               borderRadius: 24,
               maxWidth: "680px",
@@ -476,11 +476,11 @@ export function CaseStudies() {
                 style={{
                   padding: "1.25rem",
                   borderRadius: 12,
-                  background: "rgba(239,68,68,0.06)",
-                  border: "1px solid rgba(239,68,68,0.2)",
+                  background: "rgba(225,6,0,0.06)",
+                  border: "1px solid rgba(225,6,0,0.2)",
                 }}
               >
-                <div style={{ fontSize: "0.75rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#F87171", marginBottom: 4 }}>
+                <div style={{ fontSize: "0.75rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.08em", color: "#FF4D49", marginBottom: 4 }}>
                   The Challenge
                 </div>
                 <div style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>

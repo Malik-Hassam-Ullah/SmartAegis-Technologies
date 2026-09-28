@@ -64,17 +64,17 @@ export function Faq() {
     <section
       id="faq"
       style={{
-        background: "#06060E",
+        background: "#08080C",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="container-page" style={{ maxWidth: "860px" }}>
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <div className="eyebrow">
-            <HelpCircle size={14} style={{ color: "#06B6D4" }} />
+            <HelpCircle size={14} style={{ color: "#E10600" }} />
             FREQUENTLY ASKED QUESTIONS
           </div>
           <h2
@@ -90,7 +90,7 @@ export function Faq() {
             Clear Answers to{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -127,14 +127,15 @@ export function Faq() {
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id as typeof activeCategory)}
                 style={{
-                  padding: "0.5rem 1.25rem",
+                  padding: "0.5rem 1.35rem",
                   borderRadius: 100,
                   fontSize: "0.845rem",
-                  fontWeight: 600,
+                  fontWeight: 700,
                   cursor: "pointer",
-                  background: isSelected ? "#06B6D4" : "rgba(255,255,255,0.03)",
-                  color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.6)",
-                  border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.07)",
+                  background: isSelected ? "#E10600" : "rgba(255,255,255,0.03)",
+                  color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.65)",
+                  border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.07)",
+                  boxShadow: isSelected ? "0 4px 18px rgba(225,6,0,0.4)" : "none",
                   transition: "all 0.2s ease",
                 }}
               >
@@ -152,12 +153,12 @@ export function Faq() {
               <div
                 key={faq.id}
                 style={{
-                  background: "#0D0D1A",
-                  border: isOpen ? "1px solid rgba(6,182,212,0.35)" : "1px solid rgba(255,255,255,0.06)",
+                  background: "#111116",
+                  border: isOpen ? "1px solid rgba(225,6,0,0.4)" : "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 16,
                   overflow: "hidden",
                   transition: "all 0.2s ease",
-                  boxShadow: isOpen ? "0 8px 30px rgba(0,0,0,0.4)" : "none",
+                  boxShadow: isOpen ? "0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(225,6,0,0.08)" : "none",
                 }}
               >
                 <button
@@ -184,7 +185,7 @@ export function Faq() {
                       width: 28,
                       height: 28,
                       borderRadius: "50%",
-                      background: isOpen ? "rgba(6,182,212,0.15)" : "rgba(255,255,255,0.04)",
+                      background: isOpen ? "rgba(225,6,0,0.18)" : "rgba(255,255,255,0.04)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -193,7 +194,7 @@ export function Faq() {
                       transition: "transform 0.25s ease",
                     }}
                   >
-                    <ChevronDown size={16} style={{ color: isOpen ? "#06B6D4" : "rgba(255,255,255,0.5)" }} />
+                    <ChevronDown size={16} style={{ color: isOpen ? "#E10600" : "rgba(255,255,255,0.5)" }} />
                   </div>
                 </button>
 
@@ -237,14 +238,14 @@ export function Faq() {
                 width: 44,
                 height: 44,
                 borderRadius: 12,
-                background: "rgba(6,182,212,0.1)",
-                border: "1px solid rgba(6,182,212,0.25)",
+                background: "rgba(225,6,0,0.12)",
+                border: "1px solid rgba(225,6,0,0.28)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <MessageSquare size={20} style={{ color: "#06B6D4" }} />
+              <MessageSquare size={20} style={{ color: "#E10600" }} />
             </div>
             <div>
               <div style={{ fontSize: "1rem", fontWeight: 700, color: "#fff" }}>

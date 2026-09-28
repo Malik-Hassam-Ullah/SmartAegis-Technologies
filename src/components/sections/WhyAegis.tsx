@@ -16,37 +16,37 @@ import {
 const PILLARS = [
   {
     icon: Lock,
-    accent: "#06B6D4",
+    accent: "#E10600",
     title: "100% IP & Codebase Ownership",
     desc: "Every line of code, Docker container, database migration, and design file is completely yours from day one. Zero hidden royalties or licensing traps.",
   },
   {
     icon: Users,
-    accent: "#3B82F6",
+    accent: "#FF4D49",
     title: "Senior Engineers, Direct Access",
     desc: "You collaborate directly in Slack/Discord with senior architects who write the code. No non-technical project managers game of telephone.",
   },
   {
     icon: ShieldCheck,
-    accent: "#10B981",
+    accent: "#FFC533",
     title: "Defense-Grade Security Built In",
     desc: "Automated SAST/DAST vulnerability scanning, OWASP Top 10 hardening, and TLS 1.3 standards built into every pull request by default.",
   },
   {
     icon: DollarSign,
-    accent: "#F59E0B",
+    accent: "#E10600",
     title: "Fixed Milestone Pricing",
     desc: "Crystal-clear milestone deliverables with no surprise bills. Every scope modification is estimated and explicitly approved in advance.",
   },
   {
     icon: Sparkles,
-    accent: "#8B5CF6",
+    accent: "#FF4D49",
     title: "60-Day Zero-Bug Warranty",
     desc: "We stand behind our craftsmanship. Any bugs or regressions identified within 60 days of production launch are patched with zero billable hours.",
   },
   {
     icon: Layers,
-    accent: "#EC4899",
+    accent: "#FFC533",
     title: "Zero Vendor Lock-In",
     desc: "We build exclusively on industry-standard open-source stacks (Next.js, Flutter, Go, PostgreSQL, Docker) that any competent engineer can maintain.",
   },
@@ -66,17 +66,17 @@ export function WhyAegis() {
     <section
       id="why-aegis"
       style={{
-        background: "#080812",
+        background: "#0B0B0E",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="container-page">
         {/* Header */}
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
           <div className="eyebrow">
-            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            <Sparkles size={14} style={{ color: "#E10600" }} />
             THE SMARTAEGIS ADVANTAGE
           </div>
           <h2
@@ -92,7 +92,7 @@ export function WhyAegis() {
             Why Industry Leaders Choose{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -122,7 +122,7 @@ export function WhyAegis() {
               <div
                 key={p.title}
                 style={{
-                  background: "#0D0D1A",
+                  background: "#111116",
                   border: "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 20,
                   padding: "2rem",
@@ -171,7 +171,7 @@ export function WhyAegis() {
         {/* Agency Comparison Table */}
         <div
           style={{
-            background: "#0D0D1A",
+            background: "#111116",
             border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 24,
             padding: "2.5rem",
@@ -194,7 +194,7 @@ export function WhyAegis() {
                   <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                     Service Criterion
                   </th>
-                  <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "#06B6D4", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 800 }}>
+                  <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "#E10600", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 800 }}>
                     SmartAegis Technologies
                   </th>
                   <th style={{ padding: "1rem 1.25rem", fontSize: "0.8125rem", color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
@@ -213,18 +213,18 @@ export function WhyAegis() {
                     <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.875rem", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>
                       {row.feature}
                     </td>
-                    <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.875rem", fontWeight: 700, color: "#22D3EE" }}>
+                    <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.875rem", fontWeight: 700, color: "#FF4D49" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(6,182,212,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <Check size={13} style={{ color: "#06B6D4" }} />
+                        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(225,6,0,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <Check size={14} style={{ color: "#E10600" }} />
                         </div>
                         {row.aegis}
                       </div>
                     </td>
                     <td style={{ padding: "1.125rem 1.25rem", fontSize: "0.845rem", color: "rgba(255,255,255,0.4)" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(239,68,68,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <X size={13} style={{ color: "#EF4444" }} />
+                        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <X size={14} style={{ color: "rgba(255,255,255,0.4)" }} />
                         </div>
                         {row.others}
                       </div>

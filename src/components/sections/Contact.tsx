@@ -5,12 +5,10 @@ import {
   Mail,
   Phone,
   Clock,
-  ShieldCheck,
   Send,
   CheckCircle2,
   Sparkles,
   MapPin,
-  MessageSquare,
   Lock,
 } from "lucide-react";
 
@@ -56,17 +54,17 @@ export function Contact() {
     <section
       id="contact"
       style={{
-        background: "#080812",
+        background: "#0B0B0E",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       <div className="container-page">
         {/* Header */}
         <div style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto 3.5rem" }}>
           <div className="eyebrow">
-            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            <Sparkles size={14} style={{ color: "#E10600" }} />
             START A CONVERSATION
           </div>
           <h2
@@ -82,7 +80,7 @@ export function Contact() {
             Let’s Build Something{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -111,7 +109,7 @@ export function Contact() {
             {/* Contact details box */}
             <div
               style={{
-                background: "#0D0D1A",
+                background: "#111116",
                 border: "1px solid rgba(255,255,255,0.06)",
                 borderRadius: 20,
                 padding: "2rem",
@@ -131,15 +129,15 @@ export function Contact() {
                       width: 42,
                       height: 42,
                       borderRadius: 10,
-                      background: "rgba(6,182,212,0.1)",
-                      border: "1px solid rgba(6,182,212,0.25)",
+                      background: "rgba(225,6,0,0.12)",
+                      border: "1px solid rgba(225,6,0,0.28)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <Mail size={18} style={{ color: "#06B6D4" }} />
+                    <Mail size={18} style={{ color: "#E10600" }} />
                   </div>
                   <div>
                     <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>Email Our Engineers</div>
@@ -156,15 +154,15 @@ export function Contact() {
                       width: 42,
                       height: 42,
                       borderRadius: 10,
-                      background: "rgba(6,182,212,0.1)",
-                      border: "1px solid rgba(6,182,212,0.25)",
+                      background: "rgba(225,6,0,0.12)",
+                      border: "1px solid rgba(225,6,0,0.28)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <Phone size={18} style={{ color: "#06B6D4" }} />
+                    <Phone size={18} style={{ color: "#E10600" }} />
                   </div>
                   <div>
                     <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>Direct Phone & WhatsApp</div>
@@ -178,15 +176,15 @@ export function Contact() {
                       width: 42,
                       height: 42,
                       borderRadius: 10,
-                      background: "rgba(6,182,212,0.1)",
-                      border: "1px solid rgba(6,182,212,0.25)",
+                      background: "rgba(225,6,0,0.12)",
+                      border: "1px solid rgba(225,6,0,0.28)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
                     }}
                   >
-                    <MapPin size={18} style={{ color: "#06B6D4" }} />
+                    <MapPin size={18} style={{ color: "#E10600" }} />
                   </div>
                   <div>
                     <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)" }}>Global Presence</div>
@@ -201,15 +199,15 @@ export function Contact() {
             {/* SLA Response Guarantee Box */}
             <div
               style={{
-                background: "rgba(6,182,212,0.05)",
-                border: "1px solid rgba(6,182,212,0.2)",
+                background: "rgba(225,6,0,0.06)",
+                border: "1px solid rgba(225,6,0,0.22)",
                 borderRadius: 18,
                 padding: "1.5rem",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.5rem" }}>
-                <Clock size={18} style={{ color: "#06B6D4" }} />
-                <span style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#22D3EE" }}>
+                <Clock size={18} style={{ color: "#E10600" }} />
+                <span style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#FF4D49" }}>
                   2-Hour Response Time SLA
                 </span>
               </div>
@@ -229,8 +227,8 @@ export function Contact() {
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: "0.5rem" }}>
-                <Lock size={18} style={{ color: "#10B981" }} />
-                <span style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#34D399" }}>
+                <Lock size={18} style={{ color: "#FFC533" }} />
+                <span style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#FFC533" }}>
                   100% Strict Mutual NDA
                 </span>
               </div>
@@ -244,7 +242,7 @@ export function Contact() {
           {/* Right Column: Interactive Consultation RFP Form */}
           <div
             style={{
-              background: "#0D0D1A",
+              background: "#111116",
               border: "1px solid rgba(255,255,255,0.08)",
               borderRadius: 24,
               padding: "2.5rem",
@@ -267,14 +265,15 @@ export function Contact() {
                           type="button"
                           onClick={() => setProjectType(type)}
                           style={{
-                            padding: "0.45rem 1rem",
+                            padding: "0.5rem 1.15rem",
                             borderRadius: 100,
                             fontSize: "0.8125rem",
-                            fontWeight: 600,
+                            fontWeight: 700,
                             cursor: "pointer",
-                            background: isSelected ? "#06B6D4" : "rgba(255,255,255,0.03)",
+                            background: isSelected ? "#E10600" : "rgba(255,255,255,0.03)",
                             color: isSelected ? "#FFFFFF" : "rgba(255,255,255,0.65)",
-                            border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.08)",
+                            border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.08)",
+                            boxShadow: isSelected ? "0 4px 14px rgba(225,6,0,0.4)" : "none",
                             transition: "all 0.15s ease",
                           }}
                         >
@@ -299,14 +298,14 @@ export function Contact() {
                           type="button"
                           onClick={() => setBudget(b)}
                           style={{
-                            padding: "0.45rem 1rem",
+                            padding: "0.5rem 1.15rem",
                             borderRadius: 100,
                             fontSize: "0.8125rem",
-                            fontWeight: 600,
+                            fontWeight: 700,
                             cursor: "pointer",
-                            background: isSelected ? "rgba(6,182,212,0.15)" : "rgba(255,255,255,0.03)",
-                            color: isSelected ? "#22D3EE" : "rgba(255,255,255,0.65)",
-                            border: isSelected ? "1px solid #06B6D4" : "1px solid rgba(255,255,255,0.08)",
+                            background: isSelected ? "rgba(225,6,0,0.18)" : "rgba(255,255,255,0.03)",
+                            color: isSelected ? "#FF4D49" : "rgba(255,255,255,0.65)",
+                            border: isSelected ? "1px solid #E10600" : "1px solid rgba(255,255,255,0.08)",
                             transition: "all 0.15s ease",
                           }}
                         >
@@ -330,7 +329,7 @@ export function Contact() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       style={inputStyle}
-                      onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                      onFocus={(e) => (e.target.style.borderColor = "#E10600")}
                       onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
                     />
                   </div>
@@ -345,7 +344,7 @@ export function Contact() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       style={inputStyle}
-                      onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                      onFocus={(e) => (e.target.style.borderColor = "#E10600")}
                       onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
                     />
                   </div>
@@ -361,7 +360,7 @@ export function Contact() {
                     value={formData.company}
                     onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     style={inputStyle}
-                    onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                    onFocus={(e) => (e.target.style.borderColor = "#E10600")}
                     onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
                   />
                 </div>
@@ -376,7 +375,7 @@ export function Contact() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     style={{ ...inputStyle, resize: "vertical" }}
-                    onFocus={(e) => (e.target.style.borderColor = "#06B6D4")}
+                    onFocus={(e) => (e.target.style.borderColor = "#E10600")}
                     onBlur={(e) => (e.target.style.borderColor = "rgba(255,255,255,0.09)")}
                   />
                 </div>
@@ -393,7 +392,7 @@ export function Contact() {
               </form>
             ) : (
               <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
-                <CheckCircle2 size={48} style={{ color: "#10B981", margin: "0 auto 1rem" }} />
+                <CheckCircle2 size={48} style={{ color: "#E10600", margin: "0 auto 1rem" }} />
                 <h3 style={{ fontSize: "1.5rem", fontWeight: 800, color: "#fff", marginBottom: "0.5rem" }}>
                   Brief Received Successfully
                 </h3>

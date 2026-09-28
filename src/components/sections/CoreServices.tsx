@@ -12,7 +12,6 @@ import {
   CheckCircle2,
   X,
   Sparkles,
-  ExternalLink,
 } from "lucide-react";
 
 interface ServiceItem {
@@ -34,9 +33,9 @@ const SERVICES: ServiceItem[] = [
   {
     id: "web-dev",
     icon: Globe,
-    accentColor: "#06B6D4",
-    badgeBg: "rgba(6, 182, 212, 0.12)",
-    badgeBorder: "rgba(6, 182, 212, 0.25)",
+    accentColor: "#E10600",
+    badgeBg: "rgba(225, 6, 0, 0.12)",
+    badgeBorder: "rgba(225, 6, 0, 0.28)",
     category: "Full-Stack Web",
     title: "Custom Web Applications",
     tagline: "Ultra-fast, responsive web apps built for high conversion & infinite scale.",
@@ -51,14 +50,14 @@ const SERVICES: ServiceItem[] = [
       "Robust CI/CD deployment pipelines on Vercel & AWS",
     ],
     techStack: ["Next.js", "React", "TypeScript", "Node.js", "Tailwind CSS", "GraphQL"],
-    metrics: "99.98% Uptime | Sub-800ms Page Loads",
+    metrics: "99.99% Uptime | Sub-800ms Page Loads",
   },
   {
     id: "mobile-apps",
     icon: Smartphone,
-    accentColor: "#3B82F6",
-    badgeBg: "rgba(59, 130, 246, 0.12)",
-    badgeBorder: "rgba(59, 130, 246, 0.25)",
+    accentColor: "#FF4D49",
+    badgeBg: "rgba(255, 77, 73, 0.12)",
+    badgeBorder: "rgba(255, 77, 73, 0.28)",
     category: "Mobile Engineering",
     title: "Mobile App Development",
     tagline: "Award-winning iOS & Android mobile apps engineered with single-codebase velocity.",
@@ -78,9 +77,9 @@ const SERVICES: ServiceItem[] = [
   {
     id: "enterprise-saas",
     icon: Layers,
-    accentColor: "#10B981",
-    badgeBg: "rgba(16, 185, 129, 0.12)",
-    badgeBorder: "rgba(16, 185, 129, 0.25)",
+    accentColor: "#FFC533",
+    badgeBg: "rgba(255, 197, 51, 0.12)",
+    badgeBorder: "rgba(255, 197, 51, 0.28)",
     category: "Cloud & SaaS",
     title: "Enterprise SaaS & Cloud Systems",
     tagline: "Multi-tenant cloud architectures designed to process millions of transactions securely.",
@@ -100,9 +99,9 @@ const SERVICES: ServiceItem[] = [
   {
     id: "product-design",
     icon: Figma,
-    accentColor: "#8B5CF6",
-    badgeBg: "rgba(139, 92, 246, 0.12)",
-    badgeBorder: "rgba(139, 92, 246, 0.25)",
+    accentColor: "#E10600",
+    badgeBg: "rgba(225, 6, 0, 0.12)",
+    badgeBorder: "rgba(225, 6, 0, 0.28)",
     category: "UI/UX & Product",
     title: "UI/UX & Design Systems",
     tagline: "Intuitive product design that captivates users and accelerates dev handover.",
@@ -122,9 +121,9 @@ const SERVICES: ServiceItem[] = [
   {
     id: "ai-automation",
     icon: Bot,
-    accentColor: "#F59E0B",
-    badgeBg: "rgba(245, 158, 11, 0.12)",
-    badgeBorder: "rgba(245, 158, 11, 0.25)",
+    accentColor: "#FF4D49",
+    badgeBg: "rgba(255, 77, 73, 0.12)",
+    badgeBorder: "rgba(255, 77, 73, 0.28)",
     category: "Artificial Intelligence",
     title: "AI & Intelligent Automation",
     tagline: "Empower your business workflows with tailored LLM pipelines and automated agents.",
@@ -144,9 +143,9 @@ const SERVICES: ServiceItem[] = [
   {
     id: "devops-security",
     icon: ShieldCheck,
-    accentColor: "#EC4899",
-    badgeBg: "rgba(236, 72, 153, 0.12)",
-    badgeBorder: "rgba(236, 72, 153, 0.25)",
+    accentColor: "#FFC533",
+    badgeBg: "rgba(255, 197, 51, 0.12)",
+    badgeBorder: "rgba(255, 197, 51, 0.28)",
     category: "DevOps & Security",
     title: "Cloud Infrastructure & Cybersecurity",
     tagline: "Bulletproof serverless and containerized infrastructure with continuous security.",
@@ -172,10 +171,10 @@ export function CoreServices() {
     <section
       id="services"
       style={{
-        background: "#080812",
+        background: "#0B0B0E",
         padding: "6rem 0",
         position: "relative",
-        borderTop: "1px solid rgba(255,255,255,0.05)",
+        borderTop: "1px solid rgba(255,255,255,0.06)",
       }}
     >
       {/* Background glow effects */}
@@ -187,7 +186,7 @@ export function CoreServices() {
           transform: "translateX(-50%)",
           width: "800px",
           height: "400px",
-          background: "radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(225, 6, 0, 0.08) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -196,7 +195,7 @@ export function CoreServices() {
         {/* Section Header */}
         <div style={{ textAlign: "center", maxWidth: "720px", margin: "0 auto 4rem" }}>
           <div className="eyebrow">
-            <Sparkles size={14} style={{ color: "#06B6D4" }} />
+            <Sparkles size={14} style={{ color: "#E10600" }} />
             OUR SPECIALIZATIONS
           </div>
           <h2
@@ -212,7 +211,7 @@ export function CoreServices() {
             Engineering What’s Next in{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #22D3EE, #0891B2)",
+                background: "linear-gradient(135deg, #FFFFFF 20%, #FF4D49 60%, #E10600 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -248,7 +247,7 @@ export function CoreServices() {
               <div
                 key={svc.id}
                 style={{
-                  background: "#0D0D1A",
+                  background: "#111116",
                   border: "1px solid rgba(255,255,255,0.06)",
                   borderRadius: 20,
                   padding: "2.25rem",
@@ -408,8 +407,8 @@ export function CoreServices() {
         <div
           style={{
             marginTop: "3.5rem",
-            background: "linear-gradient(135deg, rgba(6,182,212,0.08) 0%, rgba(13,13,26,0.9) 100%)",
-            border: "1px solid rgba(6,182,212,0.2)",
+            background: "linear-gradient(135deg, rgba(225,6,0,0.1) 0%, rgba(17,17,22,0.95) 100%)",
+            border: "1px solid rgba(225,6,0,0.25)",
             borderRadius: 20,
             padding: "2rem 2.5rem",
             display: "flex",
@@ -453,7 +452,7 @@ export function CoreServices() {
         >
           <div
             style={{
-              background: "#0D0D1A",
+              background: "#111116",
               border: `1px solid ${selectedService.accentColor}55`,
               borderRadius: 24,
               maxWidth: "680px",

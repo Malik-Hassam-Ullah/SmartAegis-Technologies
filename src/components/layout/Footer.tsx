@@ -25,7 +25,7 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: "#05050C",
+        background: "#08080C",
         borderTop: "1px solid rgba(255,255,255,0.06)",
         position: "relative",
         overflow: "hidden",
@@ -34,8 +34,8 @@ export function Footer() {
       {/* Top Pre-Footer Kickoff Banner (Elexoft-style) */}
       <div
         style={{
-          background: "linear-gradient(135deg, rgba(6,182,212,0.12) 0%, rgba(13,13,26,0.95) 100%)",
-          borderBottom: "1px solid rgba(6,182,212,0.18)",
+          background: "linear-gradient(135deg, rgba(225,6,0,0.12) 0%, rgba(17,17,22,0.98) 100%)",
+          borderBottom: "1px solid rgba(225,6,0,0.2)",
           padding: "3.5rem 0",
         }}
       >
@@ -55,13 +55,13 @@ export function Footer() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                padding: "3px 10px",
+                padding: "4px 12px",
                 borderRadius: 100,
-                background: "rgba(6,182,212,0.15)",
-                border: "1px solid rgba(6,182,212,0.3)",
+                background: "rgba(225,6,0,0.14)",
+                border: "1px solid rgba(225,6,0,0.28)",
                 fontSize: "0.75rem",
-                fontWeight: 700,
-                color: "#22D3EE",
+                fontWeight: 800,
+                color: "#FF4D49",
                 marginBottom: "0.75rem",
               }}
             >
@@ -114,11 +114,11 @@ export function Footer() {
                   width: 38,
                   height: 38,
                   borderRadius: 10,
-                  background: "linear-gradient(135deg, #06B6D4, #0891B2)",
+                  background: "linear-gradient(135deg, #E10600, #990400)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 0 20px rgba(6,182,212,0.4)",
+                  boxShadow: "0 0 20px rgba(225,6,0,0.45)",
                 }}
               >
                 <Shield size={20} style={{ color: "#fff" }} />
@@ -131,7 +131,7 @@ export function Footer() {
                   letterSpacing: "-0.03em",
                 }}
               >
-                SmartAegis<span style={{ color: "#06B6D4" }}>.</span>
+                SmartAegis<span style={{ color: "#E10600" }}>.</span>
               </span>
             </div>
 
@@ -140,7 +140,7 @@ export function Footer() {
               and scalable enterprise cloud ecosystems.
             </p>
 
-            <div style={{ fontSize: "0.75rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "#06B6D4" }}>
+            <div style={{ fontSize: "0.75rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "#FF4D49" }}>
               INVENT • BUILD • SCALE
             </div>
           </div>
@@ -170,7 +170,7 @@ export function Footer() {
                       textDecoration: "none",
                       transition: "color 0.15s ease",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#06B6D4")}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#FF4D49")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
                   >
                     {item.label}
@@ -205,7 +205,7 @@ export function Footer() {
                       textDecoration: "none",
                       transition: "color 0.15s ease",
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "#06B6D4")}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#FF4D49")}
                     onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
                   >
                     {item.label}
@@ -231,26 +231,26 @@ export function Footer() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem", fontSize: "0.875rem", color: "rgba(255,255,255,0.55)" }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-                <MapPin size={16} style={{ color: "#06B6D4", flexShrink: 0, marginTop: 3 }} />
+                <MapPin size={16} style={{ color: "#E10600", flexShrink: 0, marginTop: 3 }} />
                 <span>Lahore, Pakistan • Dubai, UAE • Wilmington, USA</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <Mail size={16} style={{ color: "#06B6D4", flexShrink: 0 }} />
+                <Mail size={16} style={{ color: "#E10600", flexShrink: 0 }} />
                 <a
                   href="mailto:contact@smartaegis.tech"
                   style={{ color: "inherit", textDecoration: "none" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#06B6D4")}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FF4D49")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
                 >
                   contact@smartaegis.tech
                 </a>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <Phone size={16} style={{ color: "#06B6D4", flexShrink: 0 }} />
+                <Phone size={16} style={{ color: "#E10600", flexShrink: 0 }} />
                 <a
                   href="tel:+923001234567"
                   style={{ color: "inherit", textDecoration: "none" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#06B6D4")}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FF4D49")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
                 >
                   +92 300 1234567
